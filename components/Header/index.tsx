@@ -17,10 +17,10 @@ export const Header = () => {
   return (
     <div
       className={organize([
-        "h-full",
         "w-full",
         "p-4",
         "mb-4",
+        "h-[74px]",
         "bg-gray-100",
         "dark:bg-gray-800",
         "flex",
@@ -35,7 +35,8 @@ export const Header = () => {
               "text-blue-600",
               "dark:text-blue-200",
               "font-bold",
-              "border-current",
+              "border-blue-600",
+              "dark:border-blue-200",
               "rounded-md",
               "border-2",
               "cursor-pointer",
