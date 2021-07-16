@@ -35,3 +35,5 @@ export const Logo = forwardRef<HTMLHeadingElement, LogoProps>(
     </h5>
   )
 );
+
+Logo.displayName = "Logo";
