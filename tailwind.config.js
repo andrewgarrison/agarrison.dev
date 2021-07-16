@@ -1,3 +1,5 @@
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 module.exports = {
   purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   darkMode: "class",
@@ -12,6 +14,9 @@ module.exports = {
         "2xl": "800px",
       },
     },
+    fontFamily: {
+      'sans': ['Libre Franklin', ...defaultTheme.fontFamily.sans],
+     }
   },
   variants: {
     extend: {},
