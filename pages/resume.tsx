@@ -15,16 +15,16 @@ export default function Resume() {
 
   return (
     <>
-    <object
-      data="/Resume.pdf?#zoom=90"
-      type="application/pdf"
-      width="100%"
-      height="850px"
-      className="hidden sm:block"
-    >
-      {fallback}
-    </object>
-    <div className="sm:hidden block">{fallback}</div>
+      <object
+        data="/Resume.pdf?#zoom=90"
+        type="application/pdf"
+        width="100%"
+        height="850px"
+        className="hidden sm:block"
+      >
+        {fallback}
+      </object>
+      <div className="sm:hidden block">{fallback}</div>
     </>
   );
 }
