@@ -1,7 +1,7 @@
 export default function Resume() {
   const fallback = (
     <>
-      Sorry, the PDF could not be viewed on this browser or device. Try{" "}
+      Sorry, the PDF resume could not be viewed on this browser or device. Try{" "}
       <a
         className="text-blue-600 dark:text-blue-300 underline"
         href="/Resume.pdf"
