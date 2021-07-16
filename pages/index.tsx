@@ -4,7 +4,7 @@ import { SocialLink } from "../components/SocialLink";
 export default function Home() {
   return (
     <>
-      <h1 className="text-5xl text-blue-600 dark:text-blue-300 font-bold mt-20">
+      <h1 className="text-5xl text-blue-600 dark:text-blue-300 font-bold mt-16">
         Andrew Garrison
       </h1>
       <p className="text-xl text-gray-500 dark:text-gray-200 my-4">
