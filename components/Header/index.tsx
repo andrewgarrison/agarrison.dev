@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useThemeContext } from "../../contexts/ThemeContext";
 import { FaSun, FaMoon } from "react-icons/fa";
 import { organize } from "../../utils/tailwind-helpers";
+import { Logo } from "../Logo";
 
 export const Header = () => {
   const { pathname } = useRouter();
@@ -30,28 +31,7 @@ export const Header = () => {
     >
       {!isHome && (
         <Link href="/">
-          <h5
-            className={organize([
-              "text-blue-600",
-              "dark:text-blue-200",
-              "font-bold",
-              "border-blue-600",
-              "dark:border-blue-200",
-              "rounded-md",
-              "border-2",
-              "cursor-pointer",
-              "w-11",
-              "h-11",
-              "flex",
-              "items-center",
-              "justify-center",
-              "hover:bg-blue-100",
-              "dark:hover:bg-gray-900",
-              "transition-all",
-            ])}
-          >
-            a
-          </h5>
+          <Logo />
         </Link>
       )}
       <button
