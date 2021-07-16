@@ -2,12 +2,12 @@ import React from "react";
 import Link from "next/link";
 import { organize } from "../../utils/tailwind-helpers";
 
-interface BaseProps {
+interface SocialLinkProps {
   children: React.ReactElement;
   href: string;
 }
 
-export const SocialLink = ({ children, href = "" }: BaseProps) => {
+export const SocialLink = ({ children, href = "" }: SocialLinkProps) => {
   const child = React.Children.only(children) as React.ReactElement;
   const styledChild = React.cloneElement(child, {
     className: organize([
