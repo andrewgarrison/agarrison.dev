@@ -1,4 +1,4 @@
-const defaultTheme = require('tailwindcss/defaultTheme');
+const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
   purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
@@ -15,8 +15,8 @@ module.exports = {
       },
     },
     fontFamily: {
-      'sans': ['Libre Franklin', ...defaultTheme.fontFamily.sans],
-     }
+      sans: ["Libre Franklin", ...defaultTheme.fontFamily.sans],
+    },
   },
   variants: {
     extend: {},
