@@ -30,8 +30,8 @@ export const Header = () => {
       ])}
     >
       {!isHome && (
-        <Link href="/">
-          <Logo />
+        <Link href="/" passHref>
+          <Logo classes={["hover:bg-blue-100", "dark:hover:bg-gray-700"]} />
         </Link>
       )}
       <button
