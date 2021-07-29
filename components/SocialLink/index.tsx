@@ -5,9 +5,14 @@ import { organize } from "../../utils/tailwind-helpers";
 interface SocialLinkProps {
   children: React.ReactElement;
   href: string;
+  title?: string;
 }
 
-export const SocialLink = ({ children, href = "" }: SocialLinkProps) => {
+export const SocialLink = ({
+  children,
+  href = "",
+  title = "",
+}: SocialLinkProps) => {
   const child = React.Children.only(children) as React.ReactElement;
   const styledChild = React.cloneElement(child, {
     className: organize([
@@ -35,7 +40,20 @@ export const SocialLink = ({ children, href = "" }: SocialLinkProps) => {
           "transition-all",
         ])}
       >
-        {styledChild}
+        <div
+          className={organize([
+            "flex",
+            "items-center",
+            "text-gray-600",
+            "dark:text-gray-200",
+            "group-hover:text-blue-600",
+            "dark:group-hover:text-blue-300",
+            "transition-all",
+          ])}
+        >
+          {styledChild}
+          {title && <span className="ml-2">{title}</span>}
+        </div>
       </a>
     </Link>
   );
