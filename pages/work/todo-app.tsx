@@ -9,7 +9,7 @@ export default function TodoApp() {
       <section>
         <p className="my-2">
           I wanted to improve my TypeScript skills while also creating something
-          useful, so I created a todo app. It's built with create react app,
+          useful, so I created a todo app. It&apos;s built with create react app,
           TypeScript, and uses the {" "}
           <a
             className="text-blue-600 dark:text-blue-300 underline"
