@@ -13,6 +13,7 @@ export default function TodoApp() {
             className="text-blue-600 dark:text-blue-300 underline"
             href="https://www.anchorprotocol.com/"
             target="_blank"
+            rel="noreferrer"
           >
             Anchor
           </a>
@@ -21,6 +22,7 @@ export default function TodoApp() {
             className="text-blue-600 dark:text-blue-300 underline"
             href="https://docs.anchorprotocol.com/developers-earn/anchor-earn-sdk"
             target="_blank"
+            rel="noreferrer"
           >
             Anchor Earn SDK
           </a>{" "}
@@ -35,7 +37,7 @@ export default function TodoApp() {
           />
         </div>
         <p className="my-2">
-          I really enjoyed utilizing the different api's exposed by the Anchor
+          I really enjoyed utilizing the different api&apos;s exposed by the Anchor
           Earn SDK and learning to query the Terra blockchain to enable deposit
           and tipping features.
         </p>
@@ -50,7 +52,7 @@ export default function TodoApp() {
         </p>
         <p>
           Unfortunately, on May 9th, 2022, a few months after I created this
-          site, Terra Luna's stable coin, UST, lost its peg and the entire
+          site, Terra Luna&apos;s stable coin, UST, lost its peg and the entire
           ecosystem went down with it. This has made most functionality on this
           site useless and is kept up merely as a showcase of the work I did.
         </p>

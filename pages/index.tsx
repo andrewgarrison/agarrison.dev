@@ -35,6 +35,7 @@ export default function Home() {
         </div>
         {WORK.map((work) => (
           <ProjectCard
+            key={work.url}
             title={work.title}
             imageSrc={work.imageSrc}
             url={work.url}
