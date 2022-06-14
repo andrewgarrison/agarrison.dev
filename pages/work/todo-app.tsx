@@ -6,7 +6,7 @@ export default function TodoApp() {
   return (
     <>
       <h1 className="text-4xl font-bold mb-12">Todo App</h1>
-      <section>
+      <section className="mb-12">
         <p className="my-2">
           I wanted to improve my TypeScript skills while also creating something
           useful, so I created a todo app. It&apos;s built with create react app,

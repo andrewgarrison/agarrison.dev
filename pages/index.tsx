@@ -1,6 +1,7 @@
 import { FaLinkedinIn, FaGithub, FaFileAlt, FaEnvelope } from "react-icons/fa";
 import { SocialLink } from "../components/SocialLink";
 import { ProjectCard } from "../components/ProjectCard";
+import { WORK } from "../content";
 
 export default function Home() {
   return (
@@ -32,17 +33,15 @@ export default function Home() {
           </h1>
           <div className="border-b-2 border-blue-600 dark:border-blue-300 w-4/12 mt-1" />
         </div>
-        <ProjectCard
-          title="Todo App"
-          imageSrc="https://source.unsplash.com/fMD_Cru6OTk/1600x900"
-          url="/work/todo-app"
-        >
-          A basic todo app written in TypeScript utilizing local storage to
-          persist data.
-        </ProjectCard>
-        <ProjectCard title="Koda" imageSrc="/koda-cover.jpg" url="/work/koda">
-          A prototype of an intro app page designed in Adobe XD.
-        </ProjectCard>
+        {WORK.map((work) => (
+          <ProjectCard
+            title={work.title}
+            imageSrc={work.imageSrc}
+            url={work.url}
+          >
+            {work.children}
+          </ProjectCard>
+        ))}
       </section>
     </>
   );

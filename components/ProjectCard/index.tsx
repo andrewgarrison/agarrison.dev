@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { organize } from "../../utils/tailwind-helpers";
 import { Image } from "../Image";
 
-interface ProjectCardProps {
+export interface ProjectCardProps {
   title: string;
   imageSrc: string;
   url: string;
