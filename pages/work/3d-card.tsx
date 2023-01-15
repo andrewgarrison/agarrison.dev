@@ -41,7 +41,7 @@ if (textControls.object.position.z < 0) {
           <ol className="list-decimal p-4 px-8">
             <li>Could this be done without using a JavaScript library?</li>
             <li>
-              If it's possible to update attributes on the 3D model in real
+              If it&apos;s possible to update attributes on the 3D model in real
               time, how on earth do I do this?
             </li>
             <li>
@@ -82,8 +82,8 @@ if (textControls.object.position.z < 0) {
           rendered. I discovered different 3D file types each had a specific
           loader that would need to be used and once rendered the you could
           access properties of that model. In this case, our 3D animator
-          exported the model in the Filmbox (FBX) format so I'd need to use
-          Three's{" "}
+          exported the model in the Filmbox (FBX) format so I&apos;d need to use
+          Three&apos;s{" "}
           <a
             className="text-blue-600 dark:text-blue-300 underline"
             href="https://github.com/mrdoob/three.js/blob/dev/examples/jsm/loaders/FBXLoader.js"
@@ -93,7 +93,7 @@ if (textControls.object.position.z < 0) {
             FBXLoader
           </a>
           . After doing some digging, I found out changing the card color was as
-          simple as iterating through the loaded model's material object and
+          simple as iterating through the loaded model&apos;s material object and
           finding the asset that was used as the card face and back and swapping
           those out. For example:
           <Prism language="tsx" colorScheme={theme} className="my-4">
@@ -106,7 +106,7 @@ if (textControls.object.position.z < 0) {
           point that I would need to add a new layer that would contain the
           text, but figuring out how I could attatch it to the card would be
           tricky. After reading through the different methods to render 3D text
-          in Three.js, I settled on using Three's{" "}
+          in Three.js, I settled on using Three&apos;s{" "}
           <a
             className="text-blue-600 dark:text-blue-300 underline"
             href="https://threejs.org/docs/#examples/en/renderers/CSS3DRenderer"
@@ -123,7 +123,7 @@ if (textControls.object.position.z < 0) {
           every movement. Finally, I just had to make it so that when the back
           of the card was in view the text would be visible and when the front
           of the card was in view the text would be hidden. Using the value of
-          the 3D card's <code>z</code> position this was as simple as looking
+          the 3D card&apos;s <code>z</code> position this was as simple as looking
           for a negative value to denote the card back and a positive value to
           denote the front of the card.
           <Prism language="tsx" colorScheme={theme} className="my-4">
@@ -136,17 +136,17 @@ if (textControls.object.position.z < 0) {
           by the designer and the final result was extremely performant and
           compatiable across different browsers. I was able to unit test
           different functions used to render the 3D card by decoupling them from
-          my component, however, since jsdom doesn't have WebGL context it's
+          my component, however, since jsdom doesn&apos;t have WebGL context it&apos;s
           extremely tricky to get a Three scene rendered in a unit test. In the
           future I would like to look into other testing options such as using a
           headless browser to render expected and actual images of the scene.
         </p>
-        <hr className="dark:border-gray-200 border-gray-400 my-8"/>
+        <hr className="dark:border-gray-200 border-gray-400 my-8" />
         <p className="my-4">
-          <b>Note</b>: The project I'm showcasing here is a recreation of the work I did at
-          Gemini. I used Blender to create my own 3D card model and used Figma
-          to design my own custom card faces. Check out the link below to
-          customize your own agarrison.dev credit card 😃
+          <b>Note</b>: The project I&apos;m showcasing here is a recreation of the
+          work I did at Gemini. I used Blender to create my own 3D card model
+          and used Figma to design my own custom card faces. Check out the link
+          below to customize your own agarrison.dev credit card 😃
         </p>
         <div className="flex items-center mt-6">
           <SocialLink
