@@ -2,6 +2,12 @@ import { ProjectCardProps } from "./components/ProjectCard";
 
 export const WORK: ProjectCardProps[] = [
   {
+    title: "Customizable 3D Credit Card",
+    imageSrc: "/3dcard-cover.jpg",
+    url: "/work/3d-card",
+    children: "Interact with a 3D Credit Card model in your browser",
+  },
+  {
     title: "Lofi Earn",
     imageSrc:
       "https://cdnb.artstation.com/p/assets/images/images/029/320/295/original/bogdan-mb0sco-coffeeanim.gif?1601147277",
