@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Libre_Franklin } from "next/font/google";
 import "./globals.css";
+import { Dock } from "@/components/layout/Dock";
+import { WindowFrame } from "@/components/layout/WindowFrame";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -14,7 +16,7 @@ const libreFranklin = Libre_Franklin({
 
 export const metadata: Metadata = {
   title: "Andrew Garrison",
-  description: "Coming soon",
+  description: "Portfolio",
 };
 
 export default function RootLayout({
@@ -27,7 +29,10 @@ export default function RootLayout({
       <body
         className={`${playfair.variable} ${libreFranklin.variable} font-sans antialiased`}
       >
-        {children}
+        <WindowFrame>
+          {children}
+        </WindowFrame>
+        <Dock />
       </body>
     </html>
   );
