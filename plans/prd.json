@@ -5,7 +5,6 @@
     {
       "id": "bug-001",
       "category": "bug",
-      "priority": 1,
       "description": "Fix TypeScript error in page.tsx - RefObject type mismatch",
       "steps": [
         "Fix RefObject<HTMLElement> type issue in sectionRefs",
@@ -17,7 +16,6 @@
     {
       "id": "bug-002",
       "category": "bug",
-      "priority": 1,
       "description": "Fix section transition animations broken by bug-001 fix",
       "steps": [
         "Restore setActiveSection call in pathname useEffect",
@@ -30,21 +28,20 @@
     {
       "id": "func-001",
       "category": "functional",
-      "priority": 2,
-      "description": "Implement Projects section with project grid",
+      "description": "Implement Projects section with project list",
       "steps": [
         "Create project data structure in src/data/projects.ts",
         "Design ProjectCard component with glass morphism",
-        "Implement grid layout in Projects.tsx",
-        "Add GSAP scroll/stagger animations",
-        "Verify responsive design on mobile/tablet/desktop"
+        "Implement responsive layout in Projects.tsx",
+        "Add GSAP stagger animations for entrance/exit",
+        "Verify responsive design on mobile/tablet/desktop",
+        "Each project should contain a title, overview, eye popping image, date published, and anything else worth noting"
       ],
       "passes": false
     },
     {
       "id": "func-002",
       "category": "functional",
-      "priority": 3,
       "description": "Implement About section with bio and skills",
       "steps": [
         "Add bio content and professional summary",
@@ -58,7 +55,6 @@
     {
       "id": "func-003",
       "category": "functional",
-      "priority": 4,
       "description": "Implement Contact section with form",
       "steps": [
         "Create contact form with name, email, message fields",
@@ -73,7 +69,6 @@
     {
       "id": "ui-001",
       "category": "ui",
-      "priority": 5,
       "description": "Create ProjectCard component",
       "steps": [
         "Design card layout with image, title, description",
@@ -87,7 +82,6 @@
     {
       "id": "ui-002",
       "category": "ui",
-      "priority": 6,
       "description": "Add project detail pages with dynamic routes",
       "steps": [
         "Create [slug] dynamic route structure",
@@ -101,7 +95,6 @@
     {
       "id": "perf-001",
       "category": "performance",
-      "priority": 7,
       "description": "Optimize images and assets",
       "steps": [
         "Convert background image to optimized format",
@@ -115,7 +108,6 @@
     {
       "id": "test-001",
       "category": "testing",
-      "priority": 8,
       "description": "Add unit tests for components",
       "steps": [
         "Install Vitest and React Testing Library",
@@ -129,7 +121,6 @@
     {
       "id": "a11y-001",
       "category": "accessibility",
-      "priority": 9,
       "description": "Improve accessibility compliance",
       "steps": [
         "Add ARIA labels to navigation elements",
@@ -143,7 +134,6 @@
     {
       "id": "seo-001",
       "category": "seo",
-      "priority": 10,
       "description": "Add SEO metadata and Open Graph tags",
       "steps": [
         "Add metadata to layout.tsx",
