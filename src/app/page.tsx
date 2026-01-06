@@ -51,21 +51,14 @@ export default function Home() {
   const [lastDistance, setLastDistance] = useState<number>(1);
   const [previousSection, setPreviousSection] = useState<Section | null>(null);
 
-  const sectionRefs: Record<Section, React.RefObject<HTMLElement>> = {
-    home: heroRef,
-    projects: projectsRef,
-    about: aboutRef,
-    contact: contactRef,
-  };
-
-  // Initialize based on URL
+  // Sync with URL changes (browser back/forward)
   useEffect(() => {
     const section = sectionMap[pathname] || 'home';
-    setActiveSection(section);
 
     // Set initial background position
-    if ((window as any).setParallaxSection) {
-      (window as any).setParallaxSection(section);
+    const globalWindow = window as Window & { setParallaxSection?: (section: Section) => void };
+    if (globalWindow.setParallaxSection) {
+      globalWindow.setParallaxSection(section);
     }
   }, [pathname]);
 
@@ -118,6 +111,13 @@ export default function Home() {
 
     setIsAnimating(true);
     setPreviousSection(activeSection); // Track previous section during transition
+
+    const sectionRefs: Record<Section, React.RefObject<HTMLElement | null>> = {
+      home: heroRef,
+      projects: projectsRef,
+      about: aboutRef,
+      contact: contactRef,
+    };
 
     const currentRef = sectionRefs[activeSection];
     const nextRef = sectionRefs[section];
@@ -213,16 +213,18 @@ export default function Home() {
     window.history.pushState({}, '', pathMap[section]);
 
     // Animate background parallax (CSS transition handles the smoothness)
-    if ((window as any).setParallaxSection) {
-      (window as any).setParallaxSection(section);
+    const globalWindow = window as Window & { setParallaxSection?: (section: Section) => void };
+    if (globalWindow.setParallaxSection) {
+      globalWindow.setParallaxSection(section);
     }
-  }, [activeSection, isAnimating, sectionRefs]);
+  }, [activeSection, isAnimating]);
 
   // Expose navigation function globally for Dock
   useEffect(() => {
-    (window as any).navigateToSection = navigateToSection;
+    const globalWindow = window as Window & { navigateToSection?: (section: Section) => void };
+    globalWindow.navigateToSection = navigateToSection;
     return () => {
-      delete (window as any).navigateToSection;
+      delete globalWindow.navigateToSection;
     };
   }, [navigateToSection]);
 

@@ -1,0 +1,17 @@
+=== Ralph Wiggum Progress Log ===
+Project: agarrison.dev Portfolio
+Started: [Date will be added by script]
+
+---
+
+[2026-01-05] bug-001: Fixed TypeScript and ESLint errors
+- Changed RefObject types from RefObject<HTMLElement> to RefObject<HTMLElement | null> to match actual ref initialization
+- Replaced all (window as any) with proper type: Window & { navigateToSection?: ..., setParallaxSection?: ... }
+- Fixed react-hooks/set-state-in-effect by removing setState from effect (used lazy initializer instead)
+- Fixed react-hooks/exhaustive-deps by moving sectionRefs inside useCallback
+- All files affected: page.tsx, Dock.tsx, ParallaxBackground.tsx
+- Build and lint now pass successfully ✓
+
+Next person: All TypeScript/ESLint issues resolved. Ready for feature development.
+
+---

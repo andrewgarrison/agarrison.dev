@@ -9,14 +9,15 @@ export function ParallaxBackground() {
 
   useEffect(() => {
     // Simple function to update data attribute - CSS handles the transition
-    (window as any).setParallaxSection = (section: Section) => {
+    const globalWindow = window as Window & { setParallaxSection?: (section: Section) => void };
+    globalWindow.setParallaxSection = (section: Section) => {
       if (bgRef.current) {
         bgRef.current.dataset.section = section;
       }
     };
 
     return () => {
-      delete (window as any).setParallaxSection;
+      delete globalWindow.setParallaxSection;
     };
   }, []);
 

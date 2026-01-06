@@ -1,0 +1,145 @@
+{
+  "project": "agarrison.dev Portfolio",
+  "version": "1.0.0",
+  "tasks": [
+    {
+      "id": "bug-001",
+      "category": "bug",
+      "priority": 1,
+      "description": "Fix TypeScript error in page.tsx - RefObject type mismatch",
+      "steps": [
+        "Fix RefObject<HTMLElement> type issue in sectionRefs",
+        "Verify TypeScript compilation passes",
+        "Verify production build succeeds"
+      ],
+      "passes": true
+    },
+    {
+      "id": "func-001",
+      "category": "functional",
+      "priority": 2,
+      "description": "Implement Projects section with project grid",
+      "steps": [
+        "Create project data structure in src/data/projects.ts",
+        "Design ProjectCard component with glass morphism",
+        "Implement grid layout in Projects.tsx",
+        "Add GSAP scroll/stagger animations",
+        "Verify responsive design on mobile/tablet/desktop"
+      ],
+      "passes": false
+    },
+    {
+      "id": "func-002",
+      "category": "functional",
+      "priority": 3,
+      "description": "Implement About section with bio and skills",
+      "steps": [
+        "Add bio content and professional summary",
+        "Create skills grid with tech stack",
+        "Add timeline for experience/education",
+        "Implement skill tag animations on hover",
+        "Verify content layout and readability"
+      ],
+      "passes": false
+    },
+    {
+      "id": "func-003",
+      "category": "functional",
+      "priority": 4,
+      "description": "Implement Contact section with form",
+      "steps": [
+        "Create contact form with name, email, message fields",
+        "Add client-side form validation",
+        "Style form inputs with glass morphism",
+        "Add form submission handling (API route)",
+        "Add success/error states with animations",
+        "Test form validation edge cases"
+      ],
+      "passes": false
+    },
+    {
+      "id": "ui-001",
+      "category": "ui",
+      "priority": 5,
+      "description": "Create ProjectCard component",
+      "steps": [
+        "Design card layout with image, title, description",
+        "Implement hover animations with GSAP",
+        "Add glass morphism styling",
+        "Create variant props for different layouts",
+        "Ensure accessibility (ARIA labels, keyboard nav)"
+      ],
+      "passes": false
+    },
+    {
+      "id": "ui-002",
+      "category": "ui",
+      "priority": 6,
+      "description": "Add project detail pages with dynamic routes",
+      "steps": [
+        "Create [slug] dynamic route structure",
+        "Design project detail page layout",
+        "Add image gallery component",
+        "Implement back navigation",
+        "Add page transitions"
+      ],
+      "passes": false
+    },
+    {
+      "id": "perf-001",
+      "category": "performance",
+      "priority": 7,
+      "description": "Optimize images and assets",
+      "steps": [
+        "Convert background image to optimized format",
+        "Use Next.js Image component for project images",
+        "Add loading states for images",
+        "Implement lazy loading for off-screen content",
+        "Verify Lighthouse performance score > 90"
+      ],
+      "passes": false
+    },
+    {
+      "id": "test-001",
+      "category": "testing",
+      "priority": 8,
+      "description": "Add unit tests for components",
+      "steps": [
+        "Install Vitest and React Testing Library",
+        "Create tests for GlassCard component",
+        "Create tests for navigation logic",
+        "Verify test coverage > 70%",
+        "Add test script to package.json"
+      ],
+      "passes": false
+    },
+    {
+      "id": "a11y-001",
+      "category": "accessibility",
+      "priority": 9,
+      "description": "Improve accessibility compliance",
+      "steps": [
+        "Add ARIA labels to navigation elements",
+        "Ensure keyboard navigation works for all sections",
+        "Add focus indicators for interactive elements",
+        "Test with screen reader",
+        "Verify WCAG 2.1 AA compliance"
+      ],
+      "passes": false
+    },
+    {
+      "id": "seo-001",
+      "category": "seo",
+      "priority": 10,
+      "description": "Add SEO metadata and Open Graph tags",
+      "steps": [
+        "Add metadata to layout.tsx",
+        "Create Open Graph images for sharing",
+        "Add structured data (JSON-LD)",
+        "Configure sitemap.xml",
+        "Verify meta tags with sharing previews"
+      ],
+      "passes": false
+    }
+  ]
+}

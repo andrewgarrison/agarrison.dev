@@ -234,8 +234,9 @@ export function Dock() {
     }
 
     // Navigate to the section
-    if (typeof window !== 'undefined' && (window as any).navigateToSection) {
-      (window as any).navigateToSection(section);
+    const globalWindow = window as Window & { navigateToSection?: (section: Section) => void };
+    if (typeof window !== 'undefined' && globalWindow.navigateToSection) {
+      globalWindow.navigateToSection(section);
     }
 
     // Complete the morph to final position
