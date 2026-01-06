@@ -26,3 +26,24 @@ Next person: All TypeScript/ESLint issues resolved. Ready for feature developmen
 Next person: Section animations now work correctly. The eslint-disable on line 57 is intentional - do NOT remove the setActiveSection call!
 
 ---
+
+[2026-01-05] func-001 + ui-001: Implemented Projects section with project list
+- Created src/data/projects.ts with Project interface and sample data
+  - Includes id, slug, title, overview, description, image, date, tags, featured, links
+  - Helper functions: getFeaturedProjects(), getProjectBySlug()
+- Created src/components/ui/ProjectCard.tsx with glass morphism styling
+  - Uses GlassCard component with hover effects
+  - Displays title, date, overview, and tags (limited to 3 with overflow indicator)
+  - Gradient placeholder for images until actual images are added
+- Updated src/components/sections/Projects.tsx
+  - Stacked vertical layout (flex-col) with max-width container
+  - GSAP staggered slide-in animations (each card slides from right with increasing delay)
+  - Scrollable container for when content overflows
+- All files pass TypeScript compilation and ESLint ✓
+
+Next person: Projects section is functional with 3 featured sample projects. To add real projects:
+1. Add images to /public/projects/ and update image paths in src/data/projects.ts
+2. Add more projects to the array - set featured: true to show on main page
+3. ui-002 (project detail pages) will add click-through functionality
+
+---
