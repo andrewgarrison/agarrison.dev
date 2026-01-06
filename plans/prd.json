@@ -15,6 +15,19 @@
       "passes": true
     },
     {
+      "id": "bug-002",
+      "category": "bug",
+      "priority": 1,
+      "description": "Fix section transition animations broken by bug-001 fix",
+      "steps": [
+        "Restore setActiveSection call in pathname useEffect",
+        "Add eslint-disable comment for required setState in effect",
+        "Verify animations work smoothly between all sections",
+        "Verify lint and build pass"
+      ],
+      "passes": true
+    },
+    {
       "id": "func-001",
       "category": "functional",
       "priority": 2,

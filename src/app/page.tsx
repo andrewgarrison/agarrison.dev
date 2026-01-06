@@ -51,9 +51,11 @@ export default function Home() {
   const [lastDistance, setLastDistance] = useState<number>(1);
   const [previousSection, setPreviousSection] = useState<Section | null>(null);
 
-  // Sync with URL changes (browser back/forward)
+  // Initialize based on URL - setActiveSection is required for GSAP animations to work correctly
   useEffect(() => {
     const section = sectionMap[pathname] || 'home';
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- Required for section transition animations
+    setActiveSection(section);
 
     // Set initial background position
     const globalWindow = window as Window & { setParallaxSection?: (section: Section) => void };

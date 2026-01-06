@@ -15,3 +15,14 @@ Started: [Date will be added by script]
 Next person: All TypeScript/ESLint issues resolved. Ready for feature development.
 
 ---
+
+[2026-01-05] bug-002: Fixed section transition animations
+- Root cause: bug-001 removed `setActiveSection(section)` from pathname useEffect to fix ESLint warning
+- This call is REQUIRED for GSAP animations to work - it triggers the re-render that animations depend on
+- Restored the setActiveSection call with eslint-disable comment explaining why it's necessary
+- File affected: src/app/page.tsx (lines 54-58)
+- Build and lint pass successfully ✓
+
+Next person: Section animations now work correctly. The eslint-disable on line 57 is intentional - do NOT remove the setActiveSection call!
+
+---
