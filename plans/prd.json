@@ -26,6 +26,18 @@
       "passes": true
     },
     {
+      "id": "bug-003",
+      "category": "bug",
+      "description": "Fix double scroll bar on project list page",
+      "steps": [
+        "Navigate to /projects page",
+        "Verify only a single scroll bar is shown",
+        "Clouds background should stay in place (not be scrolled) while the inner container of the page should be scrollable",
+        "Verify lint and build pass"
+      ],
+      "passes": false
+    },
+    {
       "id": "func-001",
       "category": "functional",
       "description": "Implement Projects section with project list",
