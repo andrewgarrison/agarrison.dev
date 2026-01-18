@@ -80,7 +80,7 @@
         "A short text description above the icons mentioning where you can reach me",
         "My email (andrewgarrison5@gmail.com) is also listed as a contact"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "a11y-001",
