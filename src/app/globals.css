@@ -46,10 +46,15 @@
 }
 
 /* === Outer Background === */
+html,
 body {
   background: #ffffff;
   color: var(--text-primary);
-  min-height: 100vh;
+  height: 100dvh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 /* === Glass Card Base === */
@@ -88,7 +93,7 @@ body {
 /* === Window Frame Effect === */
 .window-frame {
   padding: var(--frame-padding);
-  min-height: 100vh;
+  height: 100%;
   box-sizing: border-box;
   position: relative;
   box-shadow:
@@ -101,14 +106,14 @@ body {
 .parallax-bg {
   position: absolute;
   top: 0;
+  bottom: 0;
   left: -10%;
   width: 120%;
-  height: 100%;
   background-image: url('/clouds.jpeg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  z-index: -1;
+  z-index: 0;
   transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -128,7 +133,7 @@ body {
   );
   pointer-events: none;
   border-radius: var(--radius-xl);
-  z-index: 0;
+  z-index: 1;
 }
 
 @media (min-width: 768px) {
@@ -205,4 +210,28 @@ body {
 main.overflow-hidden {
   overflow-x: clip;
   overflow-y: hidden;
+}
+
+/* === Custom Scrollbar Styles === */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
 }

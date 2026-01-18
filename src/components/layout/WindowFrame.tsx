@@ -7,10 +7,12 @@ interface WindowFrameProps {
 
 export function WindowFrame({ children }: WindowFrameProps) {
   return (
-    <div className="p-2 md:p-3 min-h-screen">
-      <div className="window-frame pb-24 rounded-[var(--radius-xl)] overflow-hidden min-h-[calc(100vh-1rem)] md:min-h-[calc(100vh-1.5rem)]">
+    <div className="fixed inset-0 p-2 md:p-3 overflow-hidden box-border">
+      <div className="window-frame rounded-[var(--radius-xl)] overflow-hidden h-full">
         <ParallaxBackground />
-        {children}
+        <div className="relative z-10 h-full">
+          {children}
+        </div>
       </div>
     </div>
   );

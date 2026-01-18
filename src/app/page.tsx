@@ -233,7 +233,7 @@ export default function Home() {
   return (
     <main
       ref={containerRef}
-      className="relative min-h-[calc(100vh-var(--frame-padding)*2)] overflow-hidden"
+      className="relative h-full overflow-hidden"
     >
       <div style={{ display: activeSection === 'home' || previousSection === 'home' ? 'block' : 'none' }}>
         <Hero ref={heroRef} />
