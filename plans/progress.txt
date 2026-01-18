@@ -16,4 +16,9 @@ Completed the About section with comprehensive professional information:
 
 The About section now provides visitors with a complete professional overview including bio, technical expertise, and career timeline.
 
+[2026-01-18] - Accessibility Fix for About Section Timeline
+- Changed timeline period dates from text-sky-300 to text-white for better contrast
+- Improves WCAG AA compliance and readability against glass morphism background
+- Verified lint and build pass successfully
+
 ---
