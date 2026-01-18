@@ -142,7 +142,7 @@ export const About = forwardRef<HTMLElement>((props, ref) => {
                 <div className="space-y-1">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-4">
                     <h4 className="text-xl font-medium text-white">{item.title}</h4>
-                    <span className="text-sm text-sky-300 font-medium">{item.period}</span>
+                    <span className="text-sm text-white font-medium">{item.period}</span>
                   </div>
                   <p className="text-white/70">{item.organization}</p>
                   <span className="inline-block mt-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-white/60">
