@@ -1,6 +1,7 @@
 'use client';
 
-import { forwardRef } from 'react';
+import { forwardRef, useRef, useEffect } from 'react';
+import gsap from 'gsap';
 import { GlassCard } from '@/components/ui/GlassCard';
 
 interface TimelineItem {
@@ -60,6 +61,44 @@ const skills = [
 ];
 
 export const About = forwardRef<HTMLElement>((props, ref) => {
+  const skillsRef = useRef<HTMLDivElement>(null);
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    if (hasAnimated.current) return;
+
+    const skillTags = skillsRef.current?.querySelectorAll('.skill-tag');
+    const timelineItems = timelineRef.current?.querySelectorAll('.timeline-item');
+
+    if (skillTags && skillTags.length > 0) {
+      hasAnimated.current = true;
+
+      gsap.set(skillTags, { opacity: 0, scale: 0.8, y: 10 });
+      gsap.to(skillTags, {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        duration: 0.4,
+        stagger: 0.05,
+        ease: 'back.out(1.5)',
+        delay: 0.3,
+      });
+    }
+
+    if (timelineItems && timelineItems.length > 0) {
+      gsap.set(timelineItems, { opacity: 0, x: -20 });
+      gsap.to(timelineItems, {
+        opacity: 1,
+        x: 0,
+        duration: 0.5,
+        stagger: 0.1,
+        ease: 'power2.out',
+        delay: 0.2,
+      });
+    }
+  }, []);
+
   return (
     <section
       ref={ref}
@@ -67,11 +106,11 @@ export const About = forwardRef<HTMLElement>((props, ref) => {
     >
       <div className="max-w-5xl w-full py-8 md:py-12 space-y-8">
         {/* Bio Section */}
-        <GlassCard className="p-8 md:p-12" variant="default">
-          <h2 className="section-heading font-serif text-4xl md:text-5xl font-medium tracking-tight text-white mb-6">
+        <GlassCard className="p-6 sm:p-8 md:p-12" variant="default">
+          <h2 className="section-heading font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white mb-4 sm:mb-6">
             About Me
           </h2>
-          <div className="section-content space-y-4 text-lg text-white/80">
+          <div className="section-content space-y-4 text-base sm:text-lg text-white/80">
             <p>
               I&apos;m a Senior Frontend Engineer with a passion for crafting exceptional user experiences
               through thoughtful design and cutting-edge web technologies. With nearly a decade of
@@ -92,11 +131,11 @@ export const About = forwardRef<HTMLElement>((props, ref) => {
         </GlassCard>
 
         {/* Skills Section */}
-        <GlassCard className="p-8 md:p-12" variant="default">
-          <h3 className="section-heading font-serif text-3xl md:text-4xl font-medium tracking-tight text-white mb-6">
+        <GlassCard className="p-6 sm:p-8 md:p-12" variant="default">
+          <h3 className="section-heading font-serif text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-white mb-4 sm:mb-6">
             Skills & Expertise
           </h3>
-          <div className="section-content">
+          <div ref={skillsRef} className="section-content">
             <div className="mb-6">
               <h4 className="text-xl font-medium text-white mb-3">Frontend Development</h4>
               <p className="text-white/70 mb-4">
@@ -128,11 +167,11 @@ export const About = forwardRef<HTMLElement>((props, ref) => {
         </GlassCard>
 
         {/* Timeline Section */}
-        <GlassCard className="p-8 md:p-12" variant="default">
-          <h3 className="section-heading font-serif text-3xl md:text-4xl font-medium tracking-tight text-white mb-8">
+        <GlassCard className="p-6 sm:p-8 md:p-12" variant="default">
+          <h3 className="section-heading font-serif text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-white mb-6 sm:mb-8">
             Experience & Education
           </h3>
-          <div className="section-content space-y-6">
+          <div ref={timelineRef} className="section-content space-y-6">
             {timeline.map((item, index) => (
               <div
                 key={index}
@@ -141,8 +180,8 @@ export const About = forwardRef<HTMLElement>((props, ref) => {
                 <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-sky-400 border-2 border-white/40 shadow-lg" />
                 <div className="space-y-1">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-4">
-                    <h4 className="text-xl font-medium text-white">{item.title}</h4>
-                    <span className="text-sm text-white font-medium">{item.period}</span>
+                    <h4 className="text-lg sm:text-xl font-medium text-white">{item.title}</h4>
+                    <span className="text-xs sm:text-sm text-white font-medium whitespace-nowrap">{item.period}</span>
                   </div>
                   <p className="text-white/70">{item.organization}</p>
                   <span className="inline-block mt-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-white/60">

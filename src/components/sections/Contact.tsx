@@ -15,14 +15,18 @@ export const Contact = forwardRef<HTMLElement>((props, ref) => {
     if (!dock || icons.length === 0) return;
 
     const firstIcon = icons[0];
-    const min = 72; // icon width (56px) + margins (8px each side = 16px total)
-    const max = 120;
+
+    // Responsive sizes based on screen width
+    const isMobile = window.innerWidth < 640;
+    const iconSize = isMobile ? 40 : 56;
+    const min = iconSize + 16; // icon width + margins (8px each side)
+    const max = isMobile ? 64 : 120;
     const bound = min * Math.PI;
 
     gsap.set(icons, {
       transformOrigin: '50% 100%',
-      width: 56,
-      height: 56,
+      width: iconSize,
+      height: iconSize,
     });
 
     const updateIcons = (pointer: number) => {
@@ -81,26 +85,25 @@ export const Contact = forwardRef<HTMLElement>((props, ref) => {
       ref={ref}
       className="absolute inset-0 flex flex-col items-center justify-center p-6"
     >
-      <GlassCard className="max-w-4xl w-full pb-0 pt-8 px-8 md:pt-12 md:px-12 relative flex flex-col" variant="default">
-        <h2 className="section-heading font-serif text-4xl md:text-5xl font-medium tracking-tight text-white mb-6">
+      <GlassCard className="max-w-4xl w-full pb-0 pt-6 px-6 sm:pt-8 sm:px-8 md:pt-12 md:px-12 relative flex flex-col !rounded-b-none" variant="default">
+        <h2 className="section-heading font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white mb-4 sm:mb-6">
           Let&apos;s Connect
         </h2>
 
-        <p className="section-content text-lg text-white/80 mb-16 text-center">
+        <p className="section-content text-base sm:text-lg text-white/80 mb-8 sm:mb-12 md:mb-16">
           I&apos;m always open to new opportunities and conversations. Reach out and let&apos;s create something amazing together.
         </p>
 
         {/* macOS-style Dock */}
-        <div className="flex justify-center mt-auto">
+        <div className="mt-auto -mx-6 sm:-mx-8 md:-mx-12">
           <ul
             ref={dockRef}
-            className="inline-flex justify-center items-end h-20 rounded-t-2xl m-0 py-3 glass-strong list-none relative"
-            style={{ overflow: 'visible', paddingLeft: '80px', paddingRight: '80px' }}
+            className="flex justify-center items-end h-16 sm:h-20 m-0 py-2 sm:py-3 glass-strong list-none relative w-full"
+            style={{ overflow: 'visible', borderRadius: '1rem 1rem 0 0' }}
           >
             <li
               ref={(el) => { itemsRef.current[0] = el; }}
-              className="mx-2"
-              style={{ width: '56px', height: '56px' }}
+              className="mx-1 sm:mx-2 w-14 h-14"
             >
               <a
                 href="https://www.linkedin.com/in/andrewtategarrison"
@@ -122,8 +125,7 @@ export const Contact = forwardRef<HTMLElement>((props, ref) => {
 
             <li
               ref={(el) => { itemsRef.current[1] = el; }}
-              className="mx-2"
-              style={{ width: '56px', height: '56px' }}
+              className="mx-1 sm:mx-2 w-14 h-14"
             >
               <a
                 href="https://x.com/Andrew_Garrison"
@@ -145,8 +147,7 @@ export const Contact = forwardRef<HTMLElement>((props, ref) => {
 
             <li
               ref={(el) => { itemsRef.current[2] = el; }}
-              className="mx-2"
-              style={{ width: '56px', height: '56px' }}
+              className="mx-1 sm:mx-2 w-14 h-14"
             >
               <a
                 href="mailto:andrewgarrison5@gmail.com"

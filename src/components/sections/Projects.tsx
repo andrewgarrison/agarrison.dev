@@ -45,7 +45,7 @@ export const Projects = forwardRef<HTMLElement>((props, ref) => {
       <div className="w-full max-w-6xl mx-auto py-8 md:py-12">
         <h2
           ref={headingRef}
-          className="section-heading font-serif text-4xl md:text-5xl font-medium tracking-tight text-white mb-8 md:mb-12 text-center"
+          className="section-heading font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white mb-6 sm:mb-8 md:mb-12 text-center"
         >
           Projects
         </h2>

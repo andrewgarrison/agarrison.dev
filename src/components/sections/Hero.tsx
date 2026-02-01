@@ -10,13 +10,16 @@ export const Hero = forwardRef<HTMLElement>((props, ref) => {
       className="absolute inset-0 flex flex-col items-center justify-center p-6"
     >
       <GlassCard className="max-w-2xl w-full p-8 md:p-12 text-center" variant="ghost">
-        <h1 className="hero-heading font-serif text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-white mb-6">
-          {'Andrew '.split('').map((char, i) => (
-            <span key={`andrew-${i}`} className="char inline-block">
-              {char === ' ' ? '\u00A0' : char}
-            </span>
-          ))}
-          <em className="text-white/90">
+        <h1 className="hero-heading font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-white mb-6">
+          <span className="whitespace-nowrap">
+            {'Andrew'.split('').map((char, i) => (
+              <span key={`andrew-${i}`} className="char inline-block">
+                {char}
+              </span>
+            ))}
+          </span>
+          {' '}
+          <em className="text-white/90 whitespace-nowrap inline-block">
             {'Garrison'.split('').map((char, i) => (
               <span key={`garrison-${i}`} className="char inline-block">
                 {char}
