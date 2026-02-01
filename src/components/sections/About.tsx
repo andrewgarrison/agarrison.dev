@@ -112,20 +112,18 @@ export const About = forwardRef<HTMLElement>((props, ref) => {
           </h2>
           <div className="section-content space-y-4 text-base sm:text-lg text-white/80">
             <p>
-              I&apos;m a Senior Frontend Engineer with a passion for crafting exceptional user experiences
-              through thoughtful design and cutting-edge web technologies. With nearly a decade of
-              experience spanning fintech, e-commerce, and digital innovation, I bring a unique blend
-              of technical expertise and creative problem-solving to every project.
+              Hey! I&apos;m a Senior Frontend Engineer who&apos;s spent the last decade building web experiences
+              across fintech, e-commerce, and digital products. I&apos;ve got a solid technical foundation,
+              but honestly? The way we work is changing fast, and I&apos;m all in on that shift.
             </p>
             <p>
-              My journey in frontend development has taken me from early explorations with interactive
-              web applications to mastering modern frameworks and animation libraries. I specialize in
-              building performant, accessible, and delightful interfaces that users love to interact with.
+              Right now I&apos;m focused on using Claude and AI to help teams work better together. Things like
+              Agile ceremonies, sprint planning, coordination, writing tickets—the stuff that can easily
+              become overhead. I&apos;m finding AI is really good at keeping teams aligned without the usual friction.
             </p>
             <p>
-              Recently, I&apos;ve been diving deep into agentic coding workflows, leveraging AI-powered tools
-              like Claude Code to enhance productivity and explore new paradigms in software development.
-              I believe in the power of automation and intelligent tooling to amplify human creativity.
+              I don&apos;t have all the answers, but I&apos;m enjoying figuring it out and integrating
+              agentic workflows into how I build and collaborate.
             </p>
           </div>
         </GlassCard>
