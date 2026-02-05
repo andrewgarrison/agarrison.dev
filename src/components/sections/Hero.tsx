@@ -28,7 +28,7 @@ export const Hero = forwardRef<HTMLElement>((props, ref) => {
           </em>
         </h1>
         <p className="hero-subheading text-lg md:text-xl text-white/80 max-w-md mx-auto">
-          Designer and developer crafting thoughtful digital experiences.
+          Engineer, tinkerer, perpetual learner.
         </p>
       </GlassCard>
     </section>
