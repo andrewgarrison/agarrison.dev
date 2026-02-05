@@ -386,6 +386,17 @@ export function Dock() {
                 handleMouseUp(item.section);
               }}
               onMouseLeave={handleMouseLeave}
+              onTouchStart={(e) => {
+                e.preventDefault();
+                playClickDown();
+                handleMouseDown(item.section);
+              }}
+              onTouchEnd={(e) => {
+                e.preventDefault();
+                playClickUp();
+                handleMouseUp(item.section);
+              }}
+              onTouchCancel={handleMouseLeave}
               className={isActive ? 'dock-item dock-item-active' : 'dock-item dock-item-inactive'}
               aria-label={`Navigate to ${item.label}`}
             >
