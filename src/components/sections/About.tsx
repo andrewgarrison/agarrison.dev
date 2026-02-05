@@ -112,18 +112,18 @@ export const About = forwardRef<HTMLElement>((props, ref) => {
           </h2>
           <div className="section-content space-y-4 text-base sm:text-lg text-white/80">
             <p>
-              Hey! I&apos;m a Senior Frontend Engineer who&apos;s spent the last decade building web experiences
-              across fintech, e-commerce, and digital products. I&apos;ve got a solid technical foundation,
-              but honestly? The way we work is changing fast, and I&apos;m all in on that shift.
+              Hey there. I&apos;m Andrew, based out of San Francisco and spending most of my time these days
+              thinking about how AI changes the way we build things. Compound engineering, agentic swarms,
+              multi-agent workflows, that whole space is where I live right now, and it&apos;s moving fast.
             </p>
             <p>
-              Right now I&apos;m focused on using Claude and AI to help teams work better together. Things like
-              Agile ceremonies, sprint planning, coordination, writing tickets—the stuff that can easily
-              become overhead. I&apos;m finding AI is really good at keeping teams aligned without the usual friction.
+              I&apos;m also really curious about the intersection of AI and 3D, world models especially.
+              The idea that we&apos;re getting close to AI that can actually reason about and generate
+              three-dimensional environments is kind of wild, and I&apos;m watching that space closely.
             </p>
             <p>
-              I don&apos;t have all the answers, but I&apos;m enjoying figuring it out and integrating
-              agentic workflows into how I build and collaborate.
+              Not looking for new roles at the moment, but I&apos;m always down to hear interesting ideas.
+              And if you&apos;re in SF and want to grab a coffee and talk big ideas or sports, count me in.
             </p>
           </div>
         </GlassCard>
