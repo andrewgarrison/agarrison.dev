@@ -31,7 +31,8 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       >
         <div className="relative h-40 md:h-48 overflow-hidden rounded-t-[var(--radius-lg)]">
           <div
-            className="absolute inset-0 bg-gradient-to-br from-sky-400/30 to-sky-600/30 transition-transform duration-500 group-hover:scale-105"
+            className="absolute inset-0 transition-transform duration-500 group-hover:scale-105"
+            style={{ background: `linear-gradient(to bottom right, color-mix(in srgb, var(--accent) 30%, transparent), color-mix(in srgb, var(--accent-deep) 30%, transparent))` }}
             aria-hidden="true"
           />
           <div className="absolute inset-0 flex items-center justify-center">

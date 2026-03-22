@@ -175,7 +175,7 @@ export const About = forwardRef<HTMLElement>((props, ref) => {
                 key={index}
                 className="timeline-item relative pl-8 pb-6 border-l-2 border-white/20 last:pb-0"
               >
-                <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-sky-400 border-2 border-white/40 shadow-lg" />
+                <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 border-white/40 shadow-lg" style={{ backgroundColor: 'var(--accent)' }} />
                 <div className="space-y-1">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-4">
                     <h4 className="text-lg sm:text-xl font-medium text-white">{item.title}</h4>

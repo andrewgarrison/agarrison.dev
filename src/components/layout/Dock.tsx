@@ -1,10 +1,11 @@
 'use client';
 
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback, useMemo } from 'react';
 import { usePathname } from 'next/navigation';
 import gsap from 'gsap';
 import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin';
 import useSound from 'use-sound';
+import { useTheme } from '@/context/ThemeContext';
 
 // Register the plugin
 gsap.registerPlugin(MorphSVGPlugin);
@@ -87,8 +88,28 @@ function createStretchedBlobPath(
 
 export function Dock() {
   const pathname = usePathname();
+  const { resolvedTheme } = useTheme();
   const [playClickDown] = useSound('/audio/dock_click-down.mp3', { volume: 0.6 });
   const [playClickUp] = useSound('/audio/dock_click-up.mp3', { volume: 0.6 });
+
+  const blobColors = useMemo(() => {
+    if (resolvedTheme === 'dark') {
+      return {
+        gradientTop: 'rgba(0, 0, 0, 0.25)',
+        gradientMid: 'rgba(0, 0, 0, 0.12)',
+        gradientBottom: 'rgba(255, 255, 255, 0.02)',
+        shadowFlood: 'rgba(0, 0, 0, 0.4)',
+        stroke: 'rgba(255, 255, 255, 0.10)',
+      };
+    }
+    return {
+      gradientTop: 'rgba(0, 0, 0, 0.14)',
+      gradientMid: 'rgba(0, 0, 0, 0.07)',
+      gradientBottom: 'rgba(255, 255, 255, 0.04)',
+      shadowFlood: 'rgba(0, 0, 0, 0.25)',
+      stroke: 'rgba(255, 255, 255, 0.18)',
+    };
+  }, [resolvedTheme]);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
@@ -346,14 +367,14 @@ export function Dock() {
         >
           <defs>
             <linearGradient id="blobGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="rgba(0, 0, 0, 0.14)" />
-              <stop offset="50%" stopColor="rgba(0, 0, 0, 0.07)" />
-              <stop offset="100%" stopColor="rgba(255, 255, 255, 0.04)" />
+              <stop offset="0%" stopColor={blobColors.gradientTop} />
+              <stop offset="50%" stopColor={blobColors.gradientMid} />
+              <stop offset="100%" stopColor={blobColors.gradientBottom} />
             </linearGradient>
             <filter id="blobShadow" x="-50%" y="-50%" width="200%" height="200%">
               <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur" />
               <feOffset in="blur" dx="0" dy="2" result="offsetBlur" />
-              <feFlood floodColor="rgba(0, 0, 0, 0.25)" />
+              <feFlood floodColor={blobColors.shadowFlood} />
               <feComposite in2="offsetBlur" operator="in" result="shadow" />
               <feMerge>
                 <feMergeNode in="shadow" />
@@ -364,7 +385,7 @@ export function Dock() {
           <path
             ref={pathRef}
             fill="url(#blobGradient)"
-            stroke="rgba(255, 255, 255, 0.18)"
+            stroke={blobColors.stroke}
             strokeWidth="1"
             filter="url(#blobShadow)"
           />
