@@ -49,7 +49,10 @@ export default function SiteShell({ initialSection }: { initialSection: Section 
   const [isAnimating, setIsAnimating] = useState(false);
   const [lastDirection, setLastDirection] = useState<number>(1);
   const [lastDistance, setLastDistance] = useState<number>(1);
-  const [previousSection, setPreviousSection] = useState<Section | null>(null);
+  // The section being transitioned to. Kept visible (alongside the active
+  // section) for the duration of the GSAP transition so the entry animation
+  // plays instead of the new content flashing in at the end.
+  const [incomingSection, setIncomingSection] = useState<Section | null>(null);
 
   // Set the initial background position on mount, and sync the section on
   // browser back/forward. In-app navigation goes through navigateToSection
@@ -120,7 +123,7 @@ export default function SiteShell({ initialSection }: { initialSection: Section 
     if (section === activeSection || isAnimating) return;
 
     setIsAnimating(true);
-    setPreviousSection(activeSection); // Track previous section during transition
+    setIncomingSection(section);
 
     const sectionRefs: Record<Section, React.RefObject<HTMLElement | null>> = {
       home: heroRef,
@@ -156,7 +159,7 @@ export default function SiteShell({ initialSection }: { initialSection: Section 
           gsap.set(currentRef.current, { opacity: 0, x: 0 });
         }
         setActiveSection(section);
-        setPreviousSection(null); // Clear previous section after transition
+        setIncomingSection(null); // Clear incoming section after transition
         setIsAnimating(false);
       },
     });
@@ -219,8 +222,11 @@ export default function SiteShell({ initialSection }: { initialSection: Section 
       }
     }
 
-    // Update URL without navigation
-    window.history.pushState({}, '', pathMap[section]);
+    // Update URL without triggering the App Router. Next.js wraps
+    // history.pushState and would otherwise perform a real client-side
+    // navigation to the route, unmounting the page mid-transition.
+    // The __NA flag tells the wrapper to update the URL only.
+    window.history.pushState({ __NA: true }, '', pathMap[section]);
 
     // Animate background parallax (CSS transition handles the smoothness)
     const globalWindow = window as Window & { setParallaxSection?: (section: Section) => void };
@@ -243,16 +249,16 @@ export default function SiteShell({ initialSection }: { initialSection: Section 
       ref={containerRef}
       className="relative h-full overflow-hidden"
     >
-      <div style={{ display: activeSection === 'home' || previousSection === 'home' ? 'block' : 'none' }}>
+      <div style={{ display: activeSection === 'home' || incomingSection === 'home' ? 'block' : 'none' }}>
         <Hero ref={heroRef} />
       </div>
-      <div style={{ display: activeSection === 'projects' || previousSection === 'projects' ? 'block' : 'none' }}>
+      <div style={{ display: activeSection === 'projects' || incomingSection === 'projects' ? 'block' : 'none' }}>
         <Projects ref={projectsRef} />
       </div>
-      <div style={{ display: activeSection === 'about' || previousSection === 'about' ? 'block' : 'none' }}>
+      <div style={{ display: activeSection === 'about' || incomingSection === 'about' ? 'block' : 'none' }}>
         <About ref={aboutRef} />
       </div>
-      <div style={{ display: activeSection === 'contact' || previousSection === 'contact' ? 'block' : 'none' }}>
+      <div style={{ display: activeSection === 'contact' || incomingSection === 'contact' ? 'block' : 'none' }}>
         <Contact ref={contactRef} />
       </div>
     </main>
