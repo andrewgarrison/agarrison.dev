@@ -75,9 +75,16 @@ export default function SiteShell({ initialSection }: { initialSection: Section 
     return () => window.removeEventListener('popstate', handlePopState);
   }, [initialSection]);
 
-  // Animate initial hero content
+  // Animate initial hero content. This runs only on the initial mount
+  // (direct load). When arriving at home via in-app navigation, the section
+  // entry animation already provides the motion, so replaying the character
+  // stagger would look like the animation restarting.
+  const heroIntroPlayed = useRef(false);
   useGSAP(() => {
+    const isFirstRun = !heroIntroPlayed.current;
+    heroIntroPlayed.current = true;
     if (activeSection !== 'home' || !heroRef.current) return;
+    if (!isFirstRun) return;
 
     const chars = heroRef.current.querySelectorAll('.char');
     const subheading = heroRef.current.querySelector('.hero-subheading');
