@@ -51,7 +51,15 @@ export default function Home() {
   const contactRef = useRef<HTMLElement>(null);
 
   // Initialize activeSection from the browser URL to prevent a flash of the wrong section
-  const [activeSection, setActiveSection] = useState<Section>(getSectionFromBrowserPath);
+  // Debug refs to capture what the URL was at each lifecycle stage.
+  const initPathRef = useRef<string>(
+    typeof window === 'undefined' ? 'SSR' : window.location.pathname
+  );
+  const [effectPath, setEffectPath] = useState<string>('not-run');
+  const [activeSection, setActiveSection] = useState<Section>(() => {
+    initPathRef.current = typeof window === 'undefined' ? 'SSR' : window.location.pathname;
+    return getSectionFromBrowserPath();
+  });
   const [isAnimating, setIsAnimating] = useState(false);
   const [lastDirection, setLastDirection] = useState<number>(1);
   const [lastDistance, setLastDistance] = useState<number>(1);
@@ -61,6 +69,7 @@ export default function Home() {
   // In-app navigation goes through navigateToSection (pushState), not the router.
   useEffect(() => {
     const syncSectionFromUrl = () => {
+      setEffectPath(window.location.pathname);
       const section = getSectionFromBrowserPath();
       setActiveSection(section);
 
@@ -247,6 +256,8 @@ export default function Home() {
       ref={containerRef}
       className="relative h-full overflow-hidden"
       data-active-section={activeSection}
+      data-init-path={initPathRef.current}
+      data-effect-path={effectPath}
     >
       <div style={{ display: activeSection === 'home' || previousSection === 'home' ? 'block' : 'none' }}>
         <Hero ref={heroRef} />
