@@ -59,8 +59,8 @@ const skills = [
 ];
 
 const currently = [
-  'Rebuilding this site in the open — the contact page just got a rewrite',
-  'Training for the California International Marathon on Dec 6 — sub-4 or bust',
+  'Rebuilding this site in the open. The contact page just got a rewrite',
+  'Training for the California International Marathon on Dec 6. Sub-4 or bust',
   'Down the AI + 3D rabbit hole, world models especially',
   'Planning a wedding for September 2027',
 ];
@@ -131,19 +131,18 @@ export const About = forwardRef<HTMLElement>((props, ref) => {
           </h2>
           <div className="section-content space-y-4 text-base sm:text-lg text-white/80">
             <p>
-              Hey, I&apos;m Andrew — a senior frontend engineer at Circle in San Francisco. I build
-              interfaces for a living and spend an unreasonable amount of time thinking about how AI
-              is changing the way software gets built: agentic coding, multi-agent workflows, the
-              whole compound engineering thing.
+              Hey, I&apos;m Andrew, a senior frontend engineer at Circle in San Francisco. I build
+              interfaces for a living, and these days that means directing a small army of coding
+              agents.
             </p>
             <p>
-              I&apos;m also down a rabbit hole on AI and 3D right now — world models especially. The
+              I&apos;m also down a rabbit hole on AI and 3D right now, world models especially. The
               idea that we&apos;re getting close to AI that can genuinely reason about physical space
               is wild, and I can&apos;t look away.
             </p>
             <p>
               Outside of work I&apos;m training for a sub-4-hour marathon and planning a wedding. Not
-              looking for a new role, but I&apos;m always up for interesting ideas — and coffee if
+              looking for a new role, but I&apos;m always up for interesting ideas, and coffee if
               you&apos;re in SF.
             </p>
           </div>
