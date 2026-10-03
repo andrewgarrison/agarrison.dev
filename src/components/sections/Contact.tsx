@@ -76,9 +76,9 @@ export const Contact = forwardRef<HTMLElement>((props, ref) => {
         </h2>
 
         <div className="section-content">
-          <div className="space-y-3 text-base sm:text-lg text-white/80 mb-8 sm:mb-10">
+          <div className="space-y-3 text-base sm:text-lg text-white mb-8 sm:mb-10">
             <p>Email is the fastest way to reach me. I read everything.</p>
-            <p className="text-white/60">
+            <p className="text-white/85">
               Always up for interesting ideas, and coffee if you&apos;re in SF.
             </p>
           </div>
@@ -109,10 +109,10 @@ export const Contact = forwardRef<HTMLElement>((props, ref) => {
                 </span>
                 <span className="flex-1 min-w-0">
                   <span className="block text-white font-medium">{link.label}</span>
-                  <span className="block text-white/60 text-sm truncate">{link.handle}</span>
+                  <span className="block text-white/85 text-sm truncate">{link.handle}</span>
                 </span>
                 <span
-                  className="flex-shrink-0 text-white/40 group-hover:text-white group-hover:translate-x-1
+                  className="flex-shrink-0 text-white/70 group-hover:text-white group-hover:translate-x-1
                              transition-all duration-300"
                   aria-hidden="true"
                 >
