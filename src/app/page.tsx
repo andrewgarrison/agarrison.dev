@@ -1,7 +1,6 @@
 'use client';
 
 import { useRef, useState, useEffect, useCallback } from 'react';
-import { usePathname } from 'next/navigation';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { Hero } from '@/components/sections/Hero';
@@ -36,33 +35,46 @@ const pathMap: Record<Section, string> = {
   contact: '/contact',
 };
 
+// Read the browser URL directly. With Next.js rewrites (/contact -> /),
+// usePathname() reports the rewritten destination path, not the visible URL,
+// so it can't be trusted to pick the initial section.
+const getSectionFromBrowserPath = (): Section => {
+  if (typeof window === 'undefined') return 'home';
+  return sectionMap[window.location.pathname] || 'home';
+};
+
 export default function Home() {
-  const pathname = usePathname();
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLElement>(null);
   const projectsRef = useRef<HTMLElement>(null);
   const aboutRef = useRef<HTMLElement>(null);
   const contactRef = useRef<HTMLElement>(null);
 
-  // Initialize activeSection based on current pathname to prevent flash
-  const [activeSection, setActiveSection] = useState<Section>(() => sectionMap[pathname] || 'home');
+  // Initialize activeSection from the browser URL to prevent a flash of the wrong section
+  const [activeSection, setActiveSection] = useState<Section>(getSectionFromBrowserPath);
   const [isAnimating, setIsAnimating] = useState(false);
   const [lastDirection, setLastDirection] = useState<number>(1);
   const [lastDistance, setLastDistance] = useState<number>(1);
   const [previousSection, setPreviousSection] = useState<Section | null>(null);
 
-  // Initialize based on URL - setActiveSection is required for GSAP animations to work correctly
+  // Sync section from the URL on mount and on back/forward navigation.
+  // In-app navigation goes through navigateToSection (pushState), not the router.
   useEffect(() => {
-    const section = sectionMap[pathname] || 'home';
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- Required for section transition animations
-    setActiveSection(section);
+    const syncSectionFromUrl = () => {
+      const section = getSectionFromBrowserPath();
+      setActiveSection(section);
 
-    // Set initial background position
-    const globalWindow = window as Window & { setParallaxSection?: (section: Section) => void };
-    if (globalWindow.setParallaxSection) {
-      globalWindow.setParallaxSection(section);
-    }
-  }, [pathname]);
+      // Set initial background position
+      const globalWindow = window as Window & { setParallaxSection?: (section: Section) => void };
+      if (globalWindow.setParallaxSection) {
+        globalWindow.setParallaxSection(section);
+      }
+    };
+
+    syncSectionFromUrl();
+    window.addEventListener('popstate', syncSectionFromUrl);
+    return () => window.removeEventListener('popstate', syncSectionFromUrl);
+  }, []);
 
   // Animate initial hero content
   useGSAP(() => {

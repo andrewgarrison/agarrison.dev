@@ -1,7 +1,6 @@
 'use client';
 
-import { useRef, useEffect, useCallback, useMemo } from 'react';
-import { usePathname } from 'next/navigation';
+import { useRef, useEffect, useCallback, useMemo, useState } from 'react';
 import gsap from 'gsap';
 import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin';
 import useSound from 'use-sound';
@@ -87,7 +86,21 @@ function createStretchedBlobPath(
 }
 
 export function Dock() {
-  const pathname = usePathname();
+  // Track the browser URL directly. With Next.js rewrites (/contact -> /),
+  // usePathname() reports the rewritten destination path, not the visible URL,
+  // so the active nav item would be wrong on direct loads.
+  const [activePath, setActivePath] = useState<string>(() =>
+    typeof window === 'undefined' ? '/' : window.location.pathname
+  );
+
+  useEffect(() => {
+    const syncPath = () => {
+      setActivePath(window.location.pathname);
+    };
+    window.addEventListener('popstate', syncPath);
+    return () => window.removeEventListener('popstate', syncPath);
+  }, []);
+
   const { resolvedTheme } = useTheme();
   const [playClickDown] = useSound('/audio/dock_click-down.mp3', { volume: 0.6 });
   const [playClickUp] = useSound('/audio/dock_click-up.mp3', { volume: 0.6 });
@@ -260,6 +273,10 @@ export function Dock() {
       globalWindow.navigateToSection(section);
     }
 
+    // pushState doesn't fire popstate, so sync the highlight directly
+    const targetPath = navItems.find((item) => item.section === section)?.path;
+    if (targetPath) setActivePath(targetPath);
+
     // Complete the morph to final position
     const finalPath = createPillPath(targetLeft, targetRight);
 
@@ -282,7 +299,7 @@ export function Dock() {
   // Handle mousedown - start the stretch
   const handleMouseDown = useCallback((section: Section) => {
     // Don't animate if already on this section
-    const currentSection = navItems.find(item => item.path === pathname)?.section;
+    const currentSection = navItems.find(item => item.path === activePath)?.section;
     if (section === currentSection || isAnimating.current) return;
 
     const targetButton = itemRefs.current[section];
@@ -297,7 +314,7 @@ export function Dock() {
 
       startStretch(targetLeft, targetRight, section);
     }
-  }, [pathname, startStretch]);
+  }, [activePath, startStretch]);
 
   // Handle mouseup - complete or cancel
   const handleMouseUp = useCallback((section: Section) => {
@@ -321,7 +338,7 @@ export function Dock() {
   // Initialize blob position on mount
   useEffect(() => {
     const timer = setTimeout(() => {
-      const activeItem = navItems.find(item => item.path === pathname);
+      const activeItem = navItems.find(item => item.path === activePath);
       if (!activeItem || !pathRef.current || !itemRefs.current[activeItem.section]) return;
 
       const activeButton = itemRefs.current[activeItem.section];
@@ -346,7 +363,7 @@ export function Dock() {
     }, 50);
 
     return () => clearTimeout(timer);
-  }, [pathname, startBreathing]);
+  }, [activePath, startBreathing]);
 
   // Cleanup on unmount
   useEffect(() => {
@@ -392,7 +409,7 @@ export function Dock() {
         </svg>
 
         {navItems.map((item) => {
-          const isActive = pathname === item.path;
+          const isActive = activePath === item.path;
 
           return (
             <button
