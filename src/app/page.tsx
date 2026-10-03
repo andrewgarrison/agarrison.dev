@@ -246,6 +246,7 @@ export default function Home() {
     <main
       ref={containerRef}
       className="relative h-full overflow-hidden"
+      data-active-section={activeSection}
     >
       <div style={{ display: activeSection === 'home' || previousSection === 'home' ? 'block' : 'none' }}>
         <Hero ref={heroRef} />
