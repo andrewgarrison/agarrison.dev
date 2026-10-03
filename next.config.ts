@@ -1,22 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  async rewrites() {
-    return [
-      {
-        source: '/projects',
-        destination: '/',
-      },
-      {
-        source: '/about',
-        destination: '/',
-      },
-      {
-        source: '/contact',
-        destination: '/',
-      },
-    ];
-  },
+  // Each section is a real route (src/app/*/page.tsx) rendering the shared
+  // SiteShell with its initial section, so no rewrites are needed.
 };
 
 export default nextConfig;

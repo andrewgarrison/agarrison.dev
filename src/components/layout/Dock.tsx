@@ -87,19 +87,11 @@ function createStretchedBlobPath(
 
 export function Dock() {
   // Track the browser URL directly. With Next.js rewrites (/contact -> /),
-  // usePathname() reports the rewritten destination path, not the visible URL,
-  // so the active nav item would be wrong on direct loads.
+  // Track the visible URL directly. Each section is a real route now, and
+  // in-app navigation uses pushState, so window.location is the source of truth.
   const [activePath, setActivePath] = useState<string>(() =>
     typeof window === 'undefined' ? '/' : window.location.pathname
   );
-
-  useEffect(() => {
-    const syncPath = () => {
-      setActivePath(window.location.pathname);
-    };
-    window.addEventListener('popstate', syncPath);
-    return () => window.removeEventListener('popstate', syncPath);
-  }, []);
 
   const { resolvedTheme } = useTheme();
   const [playClickDown] = useSound('/audio/dock_click-down.mp3', { volume: 0.6 });
@@ -190,6 +182,40 @@ export function Dock() {
 
     breathe();
   }, []);
+
+  // Keep the nav highlight and blob in sync on browser back/forward.
+  // (pushState-driven in-app navigation is animated by completeTransition's
+  // own morph, so only popstate needs the blob moved here.)
+  useEffect(() => {
+    const syncPath = () => {
+      const newPath = window.location.pathname;
+      setActivePath(newPath);
+
+      const activeItem = navItems.find((item) => item.path === newPath);
+      const targetButton = activeItem ? itemRefs.current[activeItem.section] : null;
+      if (!activeItem || !targetButton || !pathRef.current || !containerRef.current) return;
+
+      if (breathingTween.current) breathingTween.current.kill();
+
+      const containerRect = containerRef.current.getBoundingClientRect();
+      const buttonRect = targetButton.getBoundingClientRect();
+      const targetLeft = buttonRect.left - containerRect.left;
+      const targetRight = targetLeft + buttonRect.width;
+
+      currentBounds.current = { left: targetLeft, right: targetRight };
+      gsap.to(pathRef.current, {
+        morphSVG: {
+          shape: createPillPath(targetLeft, targetRight),
+          shapeIndex: 0,
+        },
+        duration: 0.35,
+        ease: 'power2.out',
+        onComplete: () => startBreathing(),
+      });
+    };
+    window.addEventListener('popstate', syncPath);
+    return () => window.removeEventListener('popstate', syncPath);
+  }, [startBreathing]);
 
   // Start stretch on mousedown - anticipation phase
   const startStretch = useCallback((targetLeft: number, targetRight: number, section: Section) => {
