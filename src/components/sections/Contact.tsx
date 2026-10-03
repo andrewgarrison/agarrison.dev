@@ -71,14 +71,14 @@ export const Contact = forwardRef<HTMLElement>((props, ref) => {
       className="absolute inset-0 flex flex-col items-center justify-center p-6 overflow-y-auto"
     >
       <GlassCard className="max-w-2xl w-full my-auto p-6 sm:p-8 md:p-10" variant="default">
-        <h2 className="section-heading font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white mb-4 sm:mb-6">
+        <h2 className="section-heading font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-foreground mb-4 sm:mb-6">
           Get in touch
         </h2>
 
         <div className="section-content">
-          <div className="space-y-3 text-base sm:text-lg text-white/80 mb-8 sm:mb-10">
+          <div className="space-y-3 text-base sm:text-lg text-foreground/80 mb-8 sm:mb-10">
             <p>Email is the fastest way to reach me. I read everything.</p>
-            <p className="text-white/60">
+            <p className="text-foreground/75">
               Always up for interesting ideas, and coffee if you&apos;re in SF.
             </p>
           </div>
@@ -95,7 +95,7 @@ export const Contact = forwardRef<HTMLElement>((props, ref) => {
                            hover:bg-white/10 hover:border-white/25 transition-all duration-300"
               >
                 <span className="flex-shrink-0 w-10 h-10 rounded-full bg-white/10 border border-white/10
-                                 flex items-center justify-center text-white/90
+                                 flex items-center justify-center text-foreground/90
                                  group-hover:scale-110 group-hover:bg-white/20 transition-all duration-300">
                   <svg
                     className="w-5 h-5"
@@ -108,11 +108,11 @@ export const Contact = forwardRef<HTMLElement>((props, ref) => {
                   </svg>
                 </span>
                 <span className="flex-1 min-w-0">
-                  <span className="block text-white font-medium">{link.label}</span>
-                  <span className="block text-white/60 text-sm truncate">{link.handle}</span>
+                  <span className="block text-foreground font-medium">{link.label}</span>
+                  <span className="block text-foreground/75 text-sm truncate">{link.handle}</span>
                 </span>
                 <span
-                  className="flex-shrink-0 text-white/40 group-hover:text-white group-hover:translate-x-1
+                  className="flex-shrink-0 text-foreground/75 group-hover:text-foreground group-hover:translate-x-1
                              transition-all duration-300"
                   aria-hidden="true"
                 >

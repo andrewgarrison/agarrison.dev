@@ -44,18 +44,18 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
 
         <div className="flex-1 p-5 md:p-6 flex flex-col">
           <div className="flex items-start justify-between gap-2 mb-2">
-            <h3 className="font-serif text-xl md:text-2xl font-medium text-white leading-tight">
+            <h3 className="font-serif text-xl md:text-2xl font-medium text-foreground leading-tight">
               {project.title}
             </h3>
             <time
               dateTime={project.date}
-              className="text-xs text-white/50 whitespace-nowrap mt-1"
+              className="text-xs text-foreground/75 whitespace-nowrap mt-1"
             >
               {formatDate(project.date)}
             </time>
           </div>
 
-          <p className="text-sm md:text-base text-white/70 mb-4 flex-1">
+          <p className="text-sm md:text-base text-foreground/80 mb-4 flex-1">
             {project.overview}
           </p>
 
@@ -63,13 +63,13 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             {project.tags.slice(0, 3).map((tag) => (
               <span
                 key={tag}
-                className="px-2 py-0.5 text-xs rounded-full bg-white/10 text-white/60 border border-white/10"
+                className="px-2 py-0.5 text-xs rounded-full bg-white/10 text-foreground/75 border border-white/10"
               >
                 {tag}
               </span>
             ))}
             {project.tags.length > 3 && (
-              <span className="px-2 py-0.5 text-xs text-white/40">
+              <span className="px-2 py-0.5 text-xs text-foreground/75">
                 +{project.tags.length - 3}
               </span>
             )}

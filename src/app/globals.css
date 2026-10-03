@@ -34,10 +34,12 @@
   --radius-lg: 20px;
   --radius-xl: 24px;
 
-  /* === Typography Colors === */
-  --text-primary: rgba(255, 255, 255, 1);
-  --text-secondary: rgba(255, 255, 255, 0.8);
-  --text-muted: rgba(255, 255, 255, 0.6);
+  /* === Typography Colors ===
+     Light theme uses dark ink for WCAG AA contrast (4.5:1) on the sky background.
+     Verified against the composited glass-card background. */
+  --text-primary: #0F172A;
+  --text-secondary: rgba(15, 23, 42, 0.8);
+  --text-muted: rgba(15, 23, 42, 0.65);
 
   /* === Transitions === */
   --transition-fast: 150ms ease;
@@ -58,8 +60,8 @@
   --dock-shadow-2: rgba(0, 0, 0, 0.08);
   --dock-inset-top: rgba(255, 255, 255, 0.25);
   --dock-inset-bottom: rgba(0, 0, 0, 0.03);
-  --dock-inactive-color: rgba(255, 255, 255, 0.7);
-  --dock-inactive-hover-color: rgba(255, 255, 255, 0.95);
+  --dock-inactive-color: rgba(15, 23, 42, 0.85);
+  --dock-inactive-hover-color: #0F172A;
   --dock-inactive-hover-bg: rgba(255, 255, 255, 0.06);
 
   /* === Scrollbar === */
@@ -276,9 +278,9 @@ body {
     drop-shadow(inset 0 3px 10px rgba(0, 0, 0, 0.2));
 }
 
-/* === Active Dock Item === */
+/* === Active Dock Item (theme-aware ink for contrast in both themes) === */
 .dock-item-active {
-  color: rgba(255, 255, 255, 1);
+  color: var(--text-primary);
 }
 
 /* === Page Transition Optimization === */
@@ -292,6 +294,14 @@ body {
 main.overflow-hidden {
   overflow-x: clip;
   overflow-y: hidden;
+}
+
+/* === Visible keyboard focus for all interactive elements (WCAG 2.4.7) === */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent-deep);
+  outline-offset: 3px;
+  border-radius: 6px;
 }
 
 /* === Custom Scrollbar Styles === */

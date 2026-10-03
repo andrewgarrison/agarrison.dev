@@ -115,7 +115,7 @@ export const Projects = forwardRef<HTMLElement>((props, ref) => {
       <div className="w-full max-w-6xl mx-auto py-8 md:py-12">
         <h2
           ref={headingRef}
-          className="section-heading font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white mb-6 sm:mb-8 md:mb-12 text-center"
+          className="section-heading font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-foreground mb-6 sm:mb-8 md:mb-12 text-center"
         >
           Projects
         </h2>
@@ -141,10 +141,10 @@ export const Projects = forwardRef<HTMLElement>((props, ref) => {
 
             {/* Main content */}
             <div className="glass rounded-2xl px-8 py-10 md:px-12 md:py-14 text-center relative z-10">
-              <h3 className="coming-soon-title font-serif text-3xl md:text-4xl lg:text-5xl font-medium text-white mb-4">
+              <h3 className="coming-soon-title font-serif text-3xl md:text-4xl lg:text-5xl font-medium text-foreground mb-4">
                 Coming Soon
               </h3>
-              <p className="coming-soon-subtitle text-white/70 text-lg md:text-xl max-w-md mx-auto leading-relaxed">
+              <p className="coming-soon-subtitle text-foreground/80 text-lg md:text-xl max-w-md mx-auto leading-relaxed">
                 Exciting projects are in the works. Check back soon to see what I&apos;ve been building.
               </p>
             </div>
@@ -161,7 +161,7 @@ export const Projects = forwardRef<HTMLElement>((props, ref) => {
             </div>
 
             {featuredProjects.length === 0 && (
-              <p className="text-center text-white/60 text-lg">
+              <p className="text-center text-foreground/75 text-lg">
                 Projects coming soon.
               </p>
             )}

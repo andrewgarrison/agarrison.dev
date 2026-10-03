@@ -10,7 +10,7 @@ export const Hero = forwardRef<HTMLElement>((props, ref) => {
       className="absolute inset-0 flex flex-col items-center justify-center p-6"
     >
       <GlassCard className="max-w-2xl w-full p-8 md:p-12 text-center" variant="ghost">
-        <h1 className="hero-heading font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-white mb-6">
+        <h1 className="hero-heading font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-foreground mb-6">
           <span className="whitespace-nowrap">
             {'Andrew'.split('').map((char, i) => (
               <span key={`andrew-${i}`} className="char inline-block">
@@ -19,7 +19,7 @@ export const Hero = forwardRef<HTMLElement>((props, ref) => {
             ))}
           </span>
           {' '}
-          <em className="text-white/90 whitespace-nowrap inline-block">
+          <em className="text-foreground/90 whitespace-nowrap inline-block">
             {'Garrison'.split('').map((char, i) => (
               <span key={`garrison-${i}`} className="char inline-block">
                 {char}
@@ -27,7 +27,7 @@ export const Hero = forwardRef<HTMLElement>((props, ref) => {
             ))}
           </em>
         </h1>
-        <p className="hero-subheading text-lg md:text-xl text-white/80 max-w-md mx-auto">
+        <p className="hero-subheading text-lg md:text-xl text-foreground/80 max-w-md mx-auto">
           Engineer, tinkerer, perpetual learner.
         </p>
       </GlassCard>

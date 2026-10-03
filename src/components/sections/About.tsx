@@ -107,10 +107,10 @@ export const About = forwardRef<HTMLElement>((props, ref) => {
       <div className="max-w-5xl w-full py-8 md:py-12 space-y-8">
         {/* Bio Section */}
         <GlassCard className="p-6 sm:p-8 md:p-12" variant="default">
-          <h2 className="section-heading font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white mb-4 sm:mb-6">
+          <h2 className="section-heading font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-foreground mb-4 sm:mb-6">
             About Me
           </h2>
-          <div className="section-content space-y-4 text-base sm:text-lg text-white/80">
+          <div className="section-content space-y-4 text-base sm:text-lg text-foreground/80">
             <p>
               Hey there. I&apos;m Andrew, based out of San Francisco and spending most of my time these days
               thinking about how AI changes the way we build things. Compound engineering, agentic swarms,
@@ -130,20 +130,20 @@ export const About = forwardRef<HTMLElement>((props, ref) => {
 
         {/* Skills Section */}
         <GlassCard className="p-6 sm:p-8 md:p-12" variant="default">
-          <h3 className="section-heading font-serif text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-white mb-4 sm:mb-6">
+          <h3 className="section-heading font-serif text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-foreground mb-4 sm:mb-6">
             Skills & Expertise
           </h3>
           <div ref={skillsRef} className="section-content">
             <div className="mb-6">
-              <h4 className="text-xl font-medium text-white mb-3">Frontend Development</h4>
-              <p className="text-white/70 mb-4">
+              <h4 className="text-xl font-medium text-foreground mb-3">Frontend Development</h4>
+              <p className="text-foreground/80 mb-4">
                 Deep technical understanding of modern web technologies, from semantic HTML and responsive
                 CSS to complex state management and animation systems.
               </p>
             </div>
             <div className="mb-6">
-              <h4 className="text-xl font-medium text-white mb-3">Agentic Coding</h4>
-              <p className="text-white/70 mb-4">
+              <h4 className="text-xl font-medium text-foreground mb-3">Agentic Coding</h4>
+              <p className="text-foreground/80 mb-4">
                 Advanced workflows utilizing AI-powered coding tools, including multi-subagent workflows
                 with Git worktrees and sophisticated automation patterns.
               </p>
@@ -153,7 +153,7 @@ export const About = forwardRef<HTMLElement>((props, ref) => {
                 <span
                   key={skill}
                   className="skill-tag px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20
-                           text-white/90 text-sm font-medium transition-all duration-300
+                           text-foreground/90 text-sm font-medium transition-all duration-300
                            hover:bg-white/20 hover:border-white/40 hover:scale-105 hover:shadow-lg
                            cursor-default"
                 >
@@ -166,7 +166,7 @@ export const About = forwardRef<HTMLElement>((props, ref) => {
 
         {/* Timeline Section */}
         <GlassCard className="p-6 sm:p-8 md:p-12" variant="default">
-          <h3 className="section-heading font-serif text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-white mb-6 sm:mb-8">
+          <h3 className="section-heading font-serif text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-foreground mb-6 sm:mb-8">
             Experience & Education
           </h3>
           <div ref={timelineRef} className="section-content space-y-6">
@@ -178,11 +178,11 @@ export const About = forwardRef<HTMLElement>((props, ref) => {
                 <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 border-white/40 shadow-lg" style={{ backgroundColor: 'var(--accent)' }} />
                 <div className="space-y-1">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-4">
-                    <h4 className="text-lg sm:text-xl font-medium text-white">{item.title}</h4>
-                    <span className="text-xs sm:text-sm text-white font-medium whitespace-nowrap">{item.period}</span>
+                    <h4 className="text-lg sm:text-xl font-medium text-foreground">{item.title}</h4>
+                    <span className="text-xs sm:text-sm text-foreground font-medium whitespace-nowrap">{item.period}</span>
                   </div>
-                  <p className="text-white/70">{item.organization}</p>
-                  <span className="inline-block mt-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-white/60">
+                  <p className="text-foreground/80">{item.organization}</p>
+                  <span className="inline-block mt-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-foreground/75">
                     {item.type === 'work' ? 'Professional' : 'Education'}
                   </span>
                 </div>
