@@ -45,24 +45,30 @@ const timeline: TimelineItem[] = [
 ];
 
 const skills = [
-  'HTML/CSS',
   'TypeScript',
   'React',
   'Next.js',
   'GSAP Animations',
-  'React Context',
   'XState State Machines',
   'Zustand',
-  'LocalStorage',
   'Agentic Coding',
   'Claude Code',
-  'Multi Subagent Workflows',
+  'Multi-Agent Workflows',
   'Git Worktrees',
+  'Web Accessibility',
+];
+
+const currently = [
+  'Rebuilding this site in the open — the contact page just got a rewrite',
+  'Training for the California International Marathon on Dec 6 — sub-4 or bust',
+  'Down the AI + 3D rabbit hole, world models especially',
+  'Planning a wedding for September 2027',
 ];
 
 export const About = forwardRef<HTMLElement>((props, ref) => {
   const skillsRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
+  const currentlyRef = useRef<HTMLDivElement>(null);
   const hasAnimated = useRef(false);
 
   useEffect(() => {
@@ -70,6 +76,7 @@ export const About = forwardRef<HTMLElement>((props, ref) => {
 
     const skillTags = skillsRef.current?.querySelectorAll('.skill-tag');
     const timelineItems = timelineRef.current?.querySelectorAll('.timeline-item');
+    const currentlyItems = currentlyRef.current?.querySelectorAll('.currently-item');
 
     if (skillTags && skillTags.length > 0) {
       hasAnimated.current = true;
@@ -83,6 +90,18 @@ export const About = forwardRef<HTMLElement>((props, ref) => {
         stagger: 0.05,
         ease: 'back.out(1.5)',
         delay: 0.3,
+      });
+    }
+
+    if (currentlyItems && currentlyItems.length > 0) {
+      gsap.set(currentlyItems, { opacity: 0, x: -12 });
+      gsap.to(currentlyItems, {
+        opacity: 1,
+        x: 0,
+        duration: 0.4,
+        stagger: 0.08,
+        ease: 'power2.out',
+        delay: 0.4,
       });
     }
 
@@ -112,19 +131,42 @@ export const About = forwardRef<HTMLElement>((props, ref) => {
           </h2>
           <div className="section-content space-y-4 text-base sm:text-lg text-white/80">
             <p>
-              Hey there. I&apos;m Andrew, based out of San Francisco and spending most of my time these days
-              thinking about how AI changes the way we build things. Compound engineering, agentic swarms,
-              multi-agent workflows, that whole space is where I live right now, and it&apos;s moving fast.
+              Hey, I&apos;m Andrew — a senior frontend engineer at Circle in San Francisco. I build
+              interfaces for a living and spend an unreasonable amount of time thinking about how AI
+              is changing the way software gets built: agentic coding, multi-agent workflows, the
+              whole compound engineering thing.
             </p>
             <p>
-              I&apos;m also really curious about the intersection of AI and 3D, world models especially.
-              The idea that we&apos;re getting close to AI that can actually reason about and generate
-              three-dimensional environments is kind of wild, and I&apos;m watching that space closely.
+              I&apos;m also down a rabbit hole on AI and 3D right now — world models especially. The
+              idea that we&apos;re getting close to AI that can genuinely reason about physical space
+              is wild, and I can&apos;t look away.
             </p>
             <p>
-              Not looking for new roles at the moment, but I&apos;m always down to hear interesting ideas.
-              And if you&apos;re in SF and want to grab a coffee and talk big ideas or sports, count me in.
+              Outside of work I&apos;m training for a sub-4-hour marathon and planning a wedding. Not
+              looking for a new role, but I&apos;m always up for interesting ideas — and coffee if
+              you&apos;re in SF.
             </p>
+          </div>
+        </GlassCard>
+
+        {/* Currently Section */}
+        <GlassCard className="p-6 sm:p-8 md:p-12" variant="default">
+          <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-white mb-4 sm:mb-6">
+            Currently
+          </h3>
+          <div ref={currentlyRef}>
+            <ul className="space-y-3 text-base sm:text-lg text-white/80">
+              {currently.map((item) => (
+                <li key={item} className="currently-item flex items-start gap-3">
+                  <span
+                    className="mt-2.5 h-2 w-2 flex-shrink-0 rounded-full"
+                    style={{ backgroundColor: 'var(--accent)' }}
+                    aria-hidden="true"
+                  />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </GlassCard>
 
