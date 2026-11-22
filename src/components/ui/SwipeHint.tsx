@@ -8,7 +8,7 @@ const SEEN_KEY = 'swipeHintSeen';
 const SHOW_DELAY = 1.6;
 
 // A one-time "‹‹‹ Swipe" hint above the dock, shown on touch screens the first
-// time the home section is on screen. Add ?swipe-hint to the URL to see it again.
+// time the home section is on screen.
 export function SwipeHint({ visible }: { visible: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const eligible = useRef<boolean | null>(null);
@@ -20,13 +20,12 @@ export function SwipeHint({ visible }: { visible: boolean }) {
 
     // Decided once, on the first run.
     if (eligible.current === null) {
-      const force = new URLSearchParams(window.location.search).has('swipe-hint');
       let seen = false;
       try {
         seen = localStorage.getItem(SEEN_KEY) === '1';
       } catch {}
       const touch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-      eligible.current = force || (touch && !seen);
+      eligible.current = touch && !seen;
     }
 
     // Leaving home (or swiping) before or during the hint cuts it short.
