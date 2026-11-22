@@ -7,6 +7,7 @@ import { Hero } from '@/components/sections/Hero';
 import { Projects } from '@/components/sections/Projects';
 import { About } from '@/components/sections/About';
 import { Contact } from '@/components/sections/Contact';
+import { SwipeHint } from '@/components/ui/SwipeHint';
 
 export type Section = 'home' | 'projects' | 'about' | 'contact';
 
@@ -348,6 +349,7 @@ export default function SiteShell({ initialSection }: { initialSection: Section 
       <div style={{ display: activeSection === 'contact' || incomingSection === 'contact' ? 'block' : 'none' }}>
         <Contact ref={contactRef} />
       </div>
+      <SwipeHint visible={activeSection === 'home' && incomingSection === null} />
     </main>
   );
 }
