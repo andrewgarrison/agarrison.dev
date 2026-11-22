@@ -19,7 +19,7 @@ Single-page app with four main sections: home, projects, about, contact. URL rou
 
 ### Animation Strategy
 - **GSAP-powered transitions**: Directional slide animations with elastic bounce
-- **Morphing SVG Dock**: Living blob indicator with breathing animation and stretch-on-click
+- **Jelly Dock**: Soft-body blob indicator (WebGL2, custom spring physics) with press anticipation, squash/stretch and idle wobble
 - **Parallax background**: CSS transitions shift cloud image based on active section
 - **Sound effects**: Click-down/up sounds on navigation interactions
 
@@ -63,10 +63,11 @@ public/
 ## Key Components
 
 ### Dock (`components/layout/Dock.tsx`)
-Interactive navigation with morphing SVG blob indicator. Features:
-- Stretch animation on mousedown (anticipation)
-- Elastic snap to target on mouseup
-- Breathing animation when idle
+Interactive navigation with a soft-body "jelly" indicator (`components/layout/jelly/JellyBlob.ts`, WebGL2 with Canvas 2D fallback). Features:
+- Leading edge tugs toward the target on mousedown (anticipation); pressing the active item squishes it
+- On mouseup the ends spring over, the body sloshes, squashes against the dock walls and wobbles
+- Idle breathing and a slight reach toward the cursor; tune live via `window.__jelly.params`
+- Respects `prefers-reduced-motion`
 - Sound effects for tactile feedback
 - Prevents animation on already-active sections
 
@@ -126,7 +127,7 @@ npm run lint   # Run ESLint
 5. GSAP animates current section out, next section in
 6. Parallax background shifts
 7. Section content animates in with directional stagger
-8. Dock blob morphs to new position with elastic ease
+8. Dock jelly springs to the new item and wobbles to rest
 
 ## Known Patterns
 - `'use client'` directive on interactive components
