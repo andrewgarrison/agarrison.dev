@@ -126,8 +126,10 @@ export default function SiteShell({ initialSection }: { initialSection: Section 
     }
   }, { scope: containerRef, dependencies: [activeSection, lastDirection, lastDistance] });
 
-  const navigateToSection = useCallback((section: Section) => {
-    if (section === activeSection || isAnimating) return;
+  // Returns false when the click is ignored (already there, or mid-transition),
+  // so the dock can keep its indicator on the page that is actually showing.
+  const navigateToSection = useCallback((section: Section): boolean => {
+    if (section === activeSection || isAnimating) return false;
 
     setIsAnimating(true);
     setIncomingSection(section);
@@ -240,11 +242,13 @@ export default function SiteShell({ initialSection }: { initialSection: Section 
     if (globalWindow.setParallaxSection) {
       globalWindow.setParallaxSection(section);
     }
+
+    return true;
   }, [activeSection, isAnimating]);
 
   // Expose navigation function globally for Dock
   useEffect(() => {
-    const globalWindow = window as Window & { navigateToSection?: (section: Section) => void };
+    const globalWindow = window as Window & { navigateToSection?: (section: Section) => boolean };
     globalWindow.navigateToSection = navigateToSection;
     return () => {
       delete globalWindow.navigateToSection;

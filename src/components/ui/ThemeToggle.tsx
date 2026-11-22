@@ -2,13 +2,19 @@
 
 import { useRef, useCallback } from 'react';
 import gsap from 'gsap';
+import useSound from 'use-sound';
 import { useTheme } from '@/context/ThemeContext';
 
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const [playClickDown] = useSound('/audio/dock_click-down.mp3', { volume: 0.6 });
+  const [playClickUp] = useSound('/audio/dock_click-up.mp3', { volume: 0.6 });
 
-  const handleClick = useCallback(() => {
+  const handleClick = useCallback((e: React.MouseEvent) => {
+    // Keyboard activation has no press, so it only gets the release sound.
+    if (e.detail === 0) playClickUp();
+
     const newTheme = resolvedTheme === 'light' ? 'dark' : 'light';
 
     // Playful bounce on click
@@ -21,11 +27,13 @@ export function ThemeToggle() {
     }
 
     setTheme(newTheme);
-  }, [resolvedTheme, setTheme]);
+  }, [resolvedTheme, setTheme, playClickUp]);
 
   return (
     <button
       ref={buttonRef}
+      onPointerDown={() => playClickDown()}
+      onPointerUp={() => playClickUp()}
       onClick={handleClick}
       className="fixed top-5 right-5 z-50 w-9 h-9 rounded-full glass flex items-center justify-center cursor-pointer transition-colors"
       aria-label={`Switch to ${resolvedTheme === 'light' ? 'dark' : 'light'} mode`}
