@@ -63,13 +63,16 @@ public/
 ## Key Components
 
 ### Dock (`components/layout/Dock.tsx`)
-Interactive navigation with a soft-body "jelly" indicator (`components/layout/jelly/JellyBlob.ts`, WebGL2 with Canvas 2D fallback). Features:
+Interactive navigation with a soft-body "jelly" indicator (`components/jelly/`: `body.ts` physics, `renderer.ts` one shared WebGL2 context with a Canvas 2D fallback, `stage.ts` one animation loop for every surface). Features:
 - Leading edge tugs toward the target on mousedown (anticipation); pressing the active item squishes it
 - On mouseup the ends spring over, the body sloshes, squashes against the dock walls and wobbles
 - Idle breathing and a slight reach toward the cursor; tune live via `window.__jelly.params`
 - Respects `prefers-reduced-motion`
 - Sound effects for tactile feedback
 - Prevents animation on already-active sections
+
+### Jelly Design spike (`components/jelly/`, `/lab`)
+Experimental components built on UI SDK (`@ui-sdk/react`, beta) for behaviour and ARIA, with the jelly drawn on top: `JellySwitch`, `JellyTabs`, `JellyPopover`. Each component owns a 2D canvas "surface"; the shared renderer draws into it, so there's only ever one WebGL context. Bindings follow UI SDK's data attributes and CSS variables (`data-checked`, `--active-tab-*`). `/lab` is not indexed.
 
 ### Page Transitions (`app/page.tsx`)
 Section-based navigation with:

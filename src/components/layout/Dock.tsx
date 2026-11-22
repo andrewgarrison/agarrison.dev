@@ -4,7 +4,9 @@ import { useRef, useEffect, useCallback, useState } from 'react';
 import useSound from 'use-sound';
 import { usePathname } from 'next/navigation';
 import { useTheme } from '@/context/ThemeContext';
-import { JellyBlob, JELLY_PALETTES, type Pill } from './jelly/JellyBlob';
+import { JellyBody, type Rect as Pill } from '@/components/jelly/body';
+import { JELLY_PALETTES } from '@/components/jelly/palette';
+import { JellySurface } from '@/components/jelly/stage';
 
 type Section = 'home' | 'projects' | 'about' | 'contact';
 
@@ -40,7 +42,8 @@ export function Dock() {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const jellyRef = useRef<JellyBlob | null>(null);
+  const jellyRef = useRef<JellyBody | null>(null);
+  const surfaceRef = useRef<JellySurface | null>(null);
   // The item under the finger while pressed.
   const pressed = useRef<Section | null>(null);
 
@@ -69,39 +72,41 @@ export function Dock() {
     const container = containerRef.current;
     if (!canvas || !container) return;
 
-    const jelly = new JellyBlob(canvas);
+    const surface = new JellySurface(canvas, CANVAS_MARGIN);
+    const jelly = new JellyBody();
+    surface.add(jelly, JELLY_PALETTES[document.documentElement.classList.contains('dark') ? 'dark' : 'light']);
     jellyRef.current = jelly;
+    surfaceRef.current = surface;
 
     const layout = () => {
-      jelly.resize(container.offsetWidth, container.offsetHeight, CANVAS_MARGIN);
+      surface.resize(container.offsetWidth, container.offsetHeight);
       const first = pillFor(navItems[0].section);
       const last = pillFor(navItems[navItems.length - 1].section);
       if (first && last) jelly.setBounds(first.left - 2, last.right + 2);
       const section = sectionForPath(activePathRef.current);
       const pill = section ? pillFor(section) : null;
       if (pill) jelly.place(pill);
+      surface.wake();
     };
     layout();
     const observer = new ResizeObserver(layout);
     observer.observe(container);
 
-    const onVisibility = () => jelly.setVisible(document.visibilityState === 'visible');
-    document.addEventListener('visibilitychange', onVisibility);
-
     // Handy for tuning the feel from devtools: window.__jelly.params
-    (window as Window & { __jelly?: JellyBlob }).__jelly = jelly;
+    (window as Window & { __jelly?: JellyBody }).__jelly = jelly;
 
     return () => {
       observer.disconnect();
-      document.removeEventListener('visibilitychange', onVisibility);
-      jelly.destroy();
+      surface.destroy();
       jellyRef.current = null;
-      delete (window as Window & { __jelly?: JellyBlob }).__jelly;
+      surfaceRef.current = null;
+      delete (window as Window & { __jelly?: JellyBody }).__jelly;
     };
   }, [pillFor]);
 
   useEffect(() => {
-    jellyRef.current?.setPalette(JELLY_PALETTES[resolvedTheme]);
+    const jelly = jellyRef.current;
+    if (jelly) surfaceRef.current?.setPalette(jelly, JELLY_PALETTES[resolvedTheme]);
   }, [resolvedTheme]);
 
   // Keep the highlight and blob in sync on browser back/forward.
@@ -113,6 +118,7 @@ export function Dock() {
       const section = sectionForPath(newPath);
       const pill = section ? pillFor(section) : null;
       if (pill) jellyRef.current?.moveTo(pill);
+      surfaceRef.current?.wake();
     };
     window.addEventListener('popstate', syncPath);
     return () => window.removeEventListener('popstate', syncPath);
@@ -137,10 +143,12 @@ export function Dock() {
     pressed.current = section;
     if (section === sectionForPath(activePathRef.current)) {
       jelly.pressInPlace();
+      surfaceRef.current?.wake();
       return;
     }
     const pill = pillFor(section);
     if (pill) jelly.pressToward(pill);
+    surfaceRef.current?.wake();
   }, [pillFor]);
 
   // Release: snap over if released on the pressed item, otherwise spring back.
@@ -156,25 +164,31 @@ export function Dock() {
     } else {
       jelly.release(null);
     }
+    surfaceRef.current?.wake();
   }, [navigate, pillFor]);
 
   const handleCancel = useCallback(() => {
     if (pressed.current === null) return;
     pressed.current = null;
     jellyRef.current?.release(null);
+    surfaceRef.current?.wake();
   }, []);
 
   // Keyboard activation (Enter/Space) arrives as a click with no pointer press.
   const handleKeyboardClick = useCallback((e: React.MouseEvent, section: Section) => {
     if (e.detail !== 0) return;
     const pill = pillFor(section);
-    if (pill && navigate(section)) jellyRef.current?.moveTo(pill);
+    if (pill && navigate(section)) {
+      jellyRef.current?.moveTo(pill);
+      surfaceRef.current?.wake();
+    }
   }, [navigate, pillFor]);
 
   const handlePointerMove = useCallback((e: React.PointerEvent) => {
     if (e.pointerType !== 'mouse' || !containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     jellyRef.current?.setPointer({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    surfaceRef.current?.wake();
   }, []);
 
   return (
@@ -183,7 +197,10 @@ export function Dock() {
         ref={containerRef}
         className="dock-container relative"
         onPointerMove={handlePointerMove}
-        onPointerLeave={() => jellyRef.current?.setPointer(null)}
+        onPointerLeave={() => {
+          jellyRef.current?.setPointer(null);
+          surfaceRef.current?.wake();
+        }}
       >
         <canvas ref={canvasRef} aria-hidden="true" className="absolute pointer-events-none z-0" />
 

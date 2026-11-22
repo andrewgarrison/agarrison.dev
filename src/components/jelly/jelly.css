@@ -1,0 +1,212 @@
+/* Jelly Design spike. UI SDK parts are unstyled; these styles key off their
+   data-slot and state attributes. The canvas is purely decorative. */
+
+.jelly-canvas {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* === Switch === */
+.jelly-switch-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 14px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.jelly-switch {
+  position: relative;
+  flex: none;
+  width: 52px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid var(--dock-border);
+  border-radius: 9999px;
+  background: var(--dock-bg);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  transition: background-color 250ms ease, border-color 250ms ease;
+}
+
+.jelly-switch[data-checked] {
+  background: var(--accent-deep);
+  border-color: transparent;
+}
+
+.jelly-switch[data-disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* The real thumb: positioned from data-checked with no transition, so the
+   jelly can measure where it lands. Visible until the jelly takes over. */
+.jelly-switch-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  background: white;
+}
+
+.jelly-switch[data-checked] .jelly-switch-thumb {
+  left: calc(100% - 26px);
+}
+
+.jelly-switch[data-jelly] .jelly-switch-thumb {
+  opacity: 0;
+}
+
+/* === Tabs === */
+.jelly-tabs {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.jelly-tabs-list {
+  position: relative;
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.375rem;
+  border: 1px solid var(--dock-border);
+  border-radius: 9999px;
+  background: var(--dock-bg);
+  backdrop-filter: blur(var(--glass-blur-strong));
+}
+
+.jelly-tab {
+  position: relative;
+  z-index: 1;
+  height: 40px;
+  min-width: 60px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 9999px;
+  background: transparent;
+  color: var(--dock-inactive-color);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 300ms ease;
+}
+
+.jelly-tab:hover {
+  color: var(--dock-inactive-hover-color);
+}
+
+.jelly-tab[data-selected] {
+  color: white;
+}
+
+/* The measured indicator. Shown as a plain pill until the jelly takes over. */
+.jelly-tabs-indicator {
+  position: absolute;
+  z-index: 0;
+  left: var(--active-tab-left);
+  top: calc(var(--active-tab-top) + 3px);
+  width: var(--active-tab-width);
+  height: calc(var(--active-tab-height) - 6px);
+  border-radius: 9999px;
+  background: rgba(3, 30, 55, 0.14);
+}
+
+.jelly-tabs-list[data-jelly] .jelly-tabs-indicator {
+  opacity: 0;
+}
+
+.jelly-tabs-panel {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  transition: opacity 200ms ease, translate 200ms ease;
+}
+
+.jelly-tabs-panel[data-starting-style],
+.jelly-tabs-panel[data-ending-style] {
+  opacity: 0;
+  translate: 0 4px;
+}
+
+/* === Buttons (plain, for the spike) === */
+.jelly-button {
+  height: 40px;
+  padding: 0 18px;
+  border: 1px solid var(--dock-border);
+  border-radius: 9999px;
+  background: var(--dock-bg);
+  color: white;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  backdrop-filter: blur(var(--glass-blur-strong));
+}
+
+.jelly-button-small {
+  height: 32px;
+  padding: 0 14px;
+  margin-top: 0.75rem;
+}
+
+/* === Popover === */
+.jelly-popover {
+  width: 280px;
+  overflow: visible;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  color: white;
+}
+
+/* Before the jelly is ready (or without JS), a plain glass panel. */
+.jelly-popover:not([data-jelly]) {
+  border-radius: 20px;
+  background: rgba(6, 50, 85, 0.85);
+}
+
+.jelly-popover-inner {
+  position: relative;
+  z-index: 1;
+  padding: 18px 20px;
+  transition: opacity 180ms ease 60ms, translate 220ms ease 40ms;
+}
+
+.jelly-popover[data-starting-style] .jelly-popover-inner {
+  opacity: 0;
+  translate: 0 -4px;
+}
+
+.jelly-popover[data-ending-style] .jelly-popover-inner {
+  opacity: 0;
+  transition-delay: 0ms;
+  transition-duration: 120ms;
+}
+
+.jelly-popover-title {
+  margin: 0 0 4px;
+  font-family: var(--font-serif);
+  font-size: 18px;
+}
+
+.jelly-popover-description {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jelly-tabs-panel,
+  .jelly-popover-inner {
+    transition: none;
+  }
+}
