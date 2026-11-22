@@ -35,8 +35,8 @@ export function Dock() {
   }, [activePath]);
 
   const { resolvedTheme } = useTheme();
-  const [playClickDown] = useSound('/audio/dock_click-down.mp3', { volume: 0.6 });
-  const [playClickUp] = useSound('/audio/dock_click-up.mp3', { volume: 0.6 });
+  const [playClickDown] = useSound('/audio/dock_press-down.m4a', { volume: 0.6 });
+  const [playClickUp] = useSound('/audio/dock_press-up-2.m4a', { volume: 0.6 });
 
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
