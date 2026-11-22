@@ -28,7 +28,7 @@
   --shadow-dock: 0 8px 32px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.1);
 
   /* === Spacing === */
-  --frame-padding: 24px;
+  --frame-padding: 8px;
   --radius-sm: 12px;
   --radius-md: 16px;
   --radius-lg: 20px;

@@ -121,11 +121,11 @@ export const About = forwardRef<HTMLElement>((props, ref) => {
   return (
     <section
       ref={ref}
-      className="absolute inset-0 flex flex-col items-center justify-start p-6 overflow-y-auto"
+      className="absolute inset-0 flex flex-col items-center justify-start p-4 md:p-6 overflow-y-auto"
     >
       <div className="max-w-5xl w-full py-8 md:py-12 space-y-8">
         {/* Bio Section */}
-        <GlassCard className="p-6 sm:p-8 md:p-12" variant="default">
+        <GlassCard className="p-5 sm:p-8 md:p-12" variant="default">
           <h2 className="section-heading font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white mb-4 sm:mb-6">
             About Me
           </h2>
@@ -149,7 +149,7 @@ export const About = forwardRef<HTMLElement>((props, ref) => {
         </GlassCard>
 
         {/* Currently Section */}
-        <GlassCard className="p-6 sm:p-8 md:p-12" variant="default">
+        <GlassCard className="p-5 sm:p-8 md:p-12" variant="default">
           <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-white mb-4 sm:mb-6">
             Currently
           </h3>
@@ -170,7 +170,7 @@ export const About = forwardRef<HTMLElement>((props, ref) => {
         </GlassCard>
 
         {/* Skills Section */}
-        <GlassCard className="p-6 sm:p-8 md:p-12" variant="default">
+        <GlassCard className="p-5 sm:p-8 md:p-12" variant="default">
           <h3 className="section-heading font-serif text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-white mb-4 sm:mb-6">
             Skills & Expertise
           </h3>
@@ -206,7 +206,7 @@ export const About = forwardRef<HTMLElement>((props, ref) => {
         </GlassCard>
 
         {/* Timeline Section */}
-        <GlassCard className="p-6 sm:p-8 md:p-12" variant="default">
+        <GlassCard className="p-5 sm:p-8 md:p-12" variant="default">
           <h3 className="section-heading font-serif text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-white mb-6 sm:mb-8">
             Experience & Education
           </h3>

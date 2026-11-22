@@ -7,9 +7,9 @@ export const Hero = forwardRef<HTMLElement>((props, ref) => {
   return (
     <section
       ref={ref}
-      className="absolute inset-0 flex flex-col items-center justify-center p-6"
+      className="absolute inset-0 flex flex-col items-center justify-center p-4 md:p-6"
     >
-      <GlassCard className="max-w-2xl w-full p-8 md:p-12 text-center" variant="ghost">
+      <GlassCard className="max-w-2xl w-full px-0 py-8 sm:px-8 md:p-12 text-center" variant="ghost">
         <h1 className="hero-heading font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-white mb-6">
           <span className="whitespace-nowrap">
             {'Andrew'.split('').map((char, i) => (

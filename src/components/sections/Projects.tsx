@@ -140,7 +140,7 @@ export const Projects = forwardRef<HTMLElement>((props, ref) => {
             </svg>
 
             {/* Main content */}
-            <div className="glass rounded-2xl px-8 py-10 md:px-12 md:py-14 text-center relative z-10">
+            <div className="glass rounded-2xl px-6 py-10 md:px-12 md:py-14 text-center relative z-10">
               <h3 className="coming-soon-title font-serif text-3xl md:text-4xl lg:text-5xl font-medium text-white mb-4">
                 Coming Soon
               </h3>

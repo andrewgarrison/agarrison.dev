@@ -68,9 +68,9 @@ export const Contact = forwardRef<HTMLElement>((props, ref) => {
   return (
     <section
       ref={ref}
-      className="absolute inset-0 flex flex-col items-center justify-center p-6 overflow-y-auto"
+      className="absolute inset-0 flex flex-col items-center justify-center p-4 md:p-6 overflow-y-auto"
     >
-      <GlassCard className="max-w-2xl w-full my-auto p-6 sm:p-8 md:p-10" variant="default">
+      <GlassCard className="max-w-2xl w-full my-auto p-5 sm:p-8 md:p-10" variant="default">
         <h2 className="section-heading font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white mb-4 sm:mb-6">
           Get in touch
         </h2>
