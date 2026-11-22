@@ -57,6 +57,8 @@ function subscribeSystemDark(listener: () => void) {
 
 const getSystemDark = () => window.matchMedia(DARK_QUERY).matches;
 
+let activeTransition: ViewTransition | null = null;
+
 function applyThemeClass(resolved: ResolvedTheme) {
   document.documentElement.classList.toggle('dark', resolved === 'dark');
 }
@@ -85,9 +87,16 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       themeListeners.forEach((listener) => listener());
     };
 
-    // Use View Transition API for smooth crossfade if available
+    // Use View Transition API for smooth crossfade if available. The
+    // background's own CSS fade is paused meanwhile so only one crossfade runs.
     if (document.startViewTransition) {
-      document.startViewTransition(apply);
+      const root = document.documentElement;
+      root.classList.add('theme-switching');
+      const transition = document.startViewTransition(apply);
+      activeTransition = transition;
+      transition.finished.finally(() => {
+        if (activeTransition === transition) root.classList.remove('theme-switching');
+      });
     } else {
       apply();
     }

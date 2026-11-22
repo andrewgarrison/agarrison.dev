@@ -1,14 +1,15 @@
 'use client';
 
 import { useRef, useEffect } from 'react';
-import { useTheme } from '@/context/ThemeContext';
 
 type Section = 'home' | 'projects' | 'about' | 'contact';
 
+// Night sits underneath and is always fully opaque; day sits on top and is
+// faded out by the `html.dark` class (see globals.css). Keeping the bottom
+// layer painted means a theme switch never exposes an unpainted frame.
 export function ParallaxBackground() {
   const dayRef = useRef<HTMLDivElement>(null);
   const nightRef = useRef<HTMLDivElement>(null);
-  const { resolvedTheme } = useTheme();
 
   useEffect(() => {
     const updateSection = (section: Section) => {
@@ -24,23 +25,19 @@ export function ParallaxBackground() {
     };
   }, []);
 
-  const isDark = resolvedTheme === 'dark';
-
   return (
     <>
-      <div
-        ref={dayRef}
-        className="parallax-bg parallax-bg-day"
-        data-section="home"
-        aria-hidden="true"
-        style={{ opacity: isDark ? 0 : 1 }}
-      />
       <div
         ref={nightRef}
         className="parallax-bg parallax-bg-night"
         data-section="home"
         aria-hidden="true"
-        style={{ opacity: isDark ? 1 : 0 }}
+      />
+      <div
+        ref={dayRef}
+        className="parallax-bg parallax-bg-day"
+        data-section="home"
+        aria-hidden="true"
       />
     </>
   );
