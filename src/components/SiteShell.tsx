@@ -7,6 +7,7 @@ import { Hero } from '@/components/sections/Hero';
 import { Projects } from '@/components/sections/Projects';
 import { About } from '@/components/sections/About';
 import { Contact } from '@/components/sections/Contact';
+import { SwipeHint } from '@/components/ui/SwipeHint';
 
 export type Section = 'home' | 'projects' | 'about' | 'contact';
 
@@ -17,7 +18,20 @@ const sectionIndex: Record<Section, number> = {
   contact: 3,
 };
 
-const getNavigationDirection = (from: Section, to: Section): number => {
+const sectionOrder: Section[] = ['home', 'projects', 'about', 'contact'];
+
+// Fired on window when the section changes from outside the dock (a swipe),
+// so the dock can move its indicator.
+export const SECTION_CHANGE_EVENT = 'sectionchange';
+
+// Swipe tuning, in px / ms.
+const SWIPE_MIN_DISTANCE = 60; // a slow, deliberate drag
+const SWIPE_MIN_FLICK = 30; // a short but fast flick...
+const SWIPE_FLICK_VELOCITY = 0.4; // ...moving at least this fast
+const SWIPE_MAX_DURATION = 800;
+const SWIPE_EDGE_GUARD = 20;
+
+const getNavigationDirection =(from: Section, to: Section): number => {
   return sectionIndex[to] > sectionIndex[from] ? 1 : -1;
 };
 
@@ -255,6 +269,69 @@ export default function SiteShell({ initialSection }: { initialSection: Section 
     };
   }, [navigateToSection]);
 
+  // Swipe left/right anywhere to move to the next/previous section (touch only).
+  // Listeners are passive so vertical scrolling inside sections is untouched.
+  const swipeNavRef = useRef({ activeSection, navigateToSection });
+  useEffect(() => {
+    swipeNavRef.current = { activeSection, navigateToSection };
+  }, [activeSection, navigateToSection]);
+
+  useEffect(() => {
+    let start: { x: number; y: number; t: number } | null = null;
+
+    const onTouchStart = (e: TouchEvent) => {
+      const touch = e.touches[0];
+      const target = e.target as Element | null;
+      // One finger only; the dock handles its own touches; skip the screen
+      // edges, where iOS Safari's back/forward gesture lives.
+      if (
+        e.touches.length !== 1 ||
+        target?.closest('nav') ||
+        touch.clientX < SWIPE_EDGE_GUARD ||
+        touch.clientX > window.innerWidth - SWIPE_EDGE_GUARD
+      ) {
+        start = null;
+        return;
+      }
+      start = { x: touch.clientX, y: touch.clientY, t: performance.now() };
+    };
+
+    const onTouchEnd = (e: TouchEvent) => {
+      if (!start) return;
+      const touch = e.changedTouches[0];
+      const dx = touch.clientX - start.x;
+      const dy = touch.clientY - start.y;
+      const elapsed = performance.now() - start.t;
+      start = null;
+
+      const horizontal = Math.abs(dx) > Math.abs(dy) * 1.5;
+      const far = Math.abs(dx) > SWIPE_MIN_DISTANCE;
+      const flick = Math.abs(dx) > SWIPE_MIN_FLICK && Math.abs(dx) / elapsed > SWIPE_FLICK_VELOCITY;
+      if (!horizontal || elapsed > SWIPE_MAX_DURATION || !(far || flick)) return;
+
+      // Finger moving left reveals the next section, like turning a page.
+      const { activeSection: current, navigateToSection: go } = swipeNavRef.current;
+      const nextIndex = sectionIndex[current] + (dx < 0 ? 1 : -1);
+      const next = sectionOrder[nextIndex];
+      if (!next) return; // Already at Home or Contact.
+
+      if (go(next)) window.dispatchEvent(new Event(SECTION_CHANGE_EVENT));
+    };
+
+    const onTouchCancel = () => {
+      start = null;
+    };
+
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchend', onTouchEnd, { passive: true });
+    window.addEventListener('touchcancel', onTouchCancel, { passive: true });
+    return () => {
+      window.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchend', onTouchEnd);
+      window.removeEventListener('touchcancel', onTouchCancel);
+    };
+  }, []);
+
   return (
     <main
       ref={containerRef}
@@ -272,6 +349,7 @@ export default function SiteShell({ initialSection }: { initialSection: Section 
       <div style={{ display: activeSection === 'contact' || incomingSection === 'contact' ? 'block' : 'none' }}>
         <Contact ref={contactRef} />
       </div>
+      <SwipeHint visible={activeSection === 'home' && incomingSection === null} />
     </main>
   );
 }
