@@ -4,6 +4,7 @@ import { useRef, useEffect, useCallback, useMemo, useState } from 'react';
 import gsap from 'gsap';
 import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin';
 import useSound from 'use-sound';
+import { usePathname } from 'next/navigation';
 import { useTheme } from '@/context/ThemeContext';
 
 // Register the plugin
@@ -86,12 +87,12 @@ function createStretchedBlobPath(
 }
 
 export function Dock() {
-  // Track the browser URL directly. With Next.js rewrites (/contact -> /),
-  // Track the visible URL directly. Each section is a real route now, and
-  // in-app navigation uses pushState, so window.location is the source of truth.
-  const [activePath, setActivePath] = useState<string>(() =>
-    typeof window === 'undefined' ? '/' : window.location.pathname
-  );
+  // Each section is a real route, so the initial path comes from Next. It is the
+  // same on the server and the client, which keeps hydration consistent on a
+  // direct load of /about etc. After that, in-app navigation uses pushState and
+  // popstate, which update activePath below.
+  const initialPath = usePathname();
+  const [activePath, setActivePath] = useState<string>(initialPath);
 
   const { resolvedTheme } = useTheme();
   const [playClickDown] = useSound('/audio/dock_click-down.mp3', { volume: 0.6 });
