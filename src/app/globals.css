@@ -197,6 +197,23 @@ body {
   background-image: url('/clouds-nighttime-dither.webp');
 }
 
+/* Theme is driven by the <html> class so it flips in the same frame as the
+   rest of the page (and is correct before hydration). */
+html.dark .parallax-bg-day {
+  opacity: 0;
+}
+
+/* While a View Transition crossfades the page, it also crossfades the
+   background; a second CSS fade on top of it fights the snapshot. */
+html.theme-switching .parallax-bg {
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.5s;
+}
+
 /* Phones scale the background by uneven amounts, which turns the 1px dither
    into a moiré pattern, so they use the original smooth photos instead. */
 @media (max-width: 767px) {
