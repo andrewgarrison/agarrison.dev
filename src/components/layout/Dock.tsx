@@ -5,6 +5,7 @@ import useSound from 'use-sound';
 import { usePathname } from 'next/navigation';
 import { useTheme } from '@/context/ThemeContext';
 import { JellyBlob, JELLY_PALETTES, type Pill } from './jelly/JellyBlob';
+import { SECTION_CHANGE_EVENT } from '@/components/SiteShell';
 
 type Section = 'home' | 'projects' | 'about' | 'contact';
 
@@ -115,7 +116,12 @@ export function Dock() {
       if (pill) jellyRef.current?.moveTo(pill);
     };
     window.addEventListener('popstate', syncPath);
-    return () => window.removeEventListener('popstate', syncPath);
+    // Swipes navigate without going through the dock.
+    window.addEventListener(SECTION_CHANGE_EVENT, syncPath);
+    return () => {
+      window.removeEventListener('popstate', syncPath);
+      window.removeEventListener(SECTION_CHANGE_EVENT, syncPath);
+    };
   }, [pillFor]);
 
   // Ask the page to navigate. It refuses mid-transition, and then the blob stays.
