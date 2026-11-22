@@ -1,6 +1,13 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from 'react';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useCallback,
+  useSyncExternalStore,
+  type ReactNode,
+} from 'react';
 
 type Theme = 'light' | 'dark' | 'system';
 type ResolvedTheme = 'light' | 'dark';
@@ -13,56 +20,69 @@ interface ThemeContextValue {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
-function getSystemTheme(): ResolvedTheme {
-  if (typeof window === 'undefined') return 'light';
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+const THEMES: Theme[] = ['light', 'dark', 'system'];
+const DARK_QUERY = '(prefers-color-scheme: dark)';
+
+// --- Saved theme (localStorage), read as an external store ---
+const themeListeners = new Set<() => void>();
+
+function readStoredTheme(): Theme {
+  try {
+    const stored = localStorage.getItem('theme') as Theme | null;
+    return stored && THEMES.includes(stored) ? stored : 'system';
+  } catch {
+    return 'system';
+  }
 }
 
-function resolveTheme(theme: Theme): ResolvedTheme {
-  return theme === 'system' ? getSystemTheme() : theme;
+function subscribeTheme(listener: () => void) {
+  themeListeners.add(listener);
+  // Keep tabs in sync when the theme changes in another tab.
+  const onStorage = (e: StorageEvent) => {
+    if (e.key === 'theme') listener();
+  };
+  window.addEventListener('storage', onStorage);
+  return () => {
+    themeListeners.delete(listener);
+    window.removeEventListener('storage', onStorage);
+  };
 }
+
+// --- System colour scheme (matchMedia), read as an external store ---
+function subscribeSystemDark(listener: () => void) {
+  const mq = window.matchMedia(DARK_QUERY);
+  mq.addEventListener('change', listener);
+  return () => mq.removeEventListener('change', listener);
+}
+
+const getSystemDark = () => window.matchMedia(DARK_QUERY).matches;
 
 function applyThemeClass(resolved: ResolvedTheme) {
   document.documentElement.classList.toggle('dark', resolved === 'dark');
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>('system');
-  const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>('light');
+  // Server snapshots match the first client render ('system' / light);
+  // React then re-renders with the real values after hydration.
+  const theme = useSyncExternalStore(subscribeTheme, readStoredTheme, () => 'system' as Theme);
+  const systemDark = useSyncExternalStore(subscribeSystemDark, getSystemDark, () => false);
+  const resolvedTheme: ResolvedTheme = theme === 'system' ? (systemDark ? 'dark' : 'light') : theme;
 
-  // Initialize from localStorage on mount
+  // Keep the <html> class in step, e.g. when the system preference changes.
   useEffect(() => {
-    const stored = localStorage.getItem('theme') as Theme | null;
-    const initial = stored && ['light', 'dark', 'system'].includes(stored) ? stored : 'system';
-    const resolved = resolveTheme(initial);
-
-    setThemeState(initial);
-    setResolvedTheme(resolved);
-    applyThemeClass(resolved);
-  }, []);
-
-  // Listen for system preference changes
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-color-scheme: dark)');
-    const handler = () => {
-      if (theme === 'system') {
-        const resolved = getSystemTheme();
-        setResolvedTheme(resolved);
-        applyThemeClass(resolved);
-      }
-    };
-    mq.addEventListener('change', handler);
-    return () => mq.removeEventListener('change', handler);
-  }, [theme]);
+    applyThemeClass(resolvedTheme);
+  }, [resolvedTheme]);
 
   const setTheme = useCallback((newTheme: Theme) => {
-    const resolved = resolveTheme(newTheme);
+    const resolved: ResolvedTheme =
+      newTheme === 'system' ? (getSystemDark() ? 'dark' : 'light') : newTheme;
 
     const apply = () => {
-      setThemeState(newTheme);
-      setResolvedTheme(resolved);
+      try {
+        localStorage.setItem('theme', newTheme);
+      } catch {}
       applyThemeClass(resolved);
-      localStorage.setItem('theme', newTheme);
+      themeListeners.forEach((listener) => listener());
     };
 
     // Use View Transition API for smooth crossfade if available
